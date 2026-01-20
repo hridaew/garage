@@ -302,50 +302,39 @@
     <section id="services" class="py-24 bg-garage-light relative overflow-hidden">
         <div class="absolute inset-0 bg-noise opacity-[0.03]"></div>
         <div class="container mx-auto px-6 lg:px-12 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 fade-in-up">
-                <div class="max-w-xl">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-garage-black mb-4 tracking-tight">How we train</h2>
-                    <p class="text-garage-gray text-lg">Holistic approaches tailored to your specific needs.</p>
-                </div>
-                <a href="/services" class="hidden md:inline-flex items-center font-semibold text-garage-black hover:text-garage-blue transition-colors mt-4 md:mt-0">
-                    View all services <i class="ph-bold ph-arrow-right ml-2"></i>
-                </a>
-            </div>
+            <!-- Removed "How we train" title/description block -->
 
-            <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
-                <!-- Card 1 -->
-                <a href="/services" class="group bg-white p-8 md:p-12 rounded-3xl shadow-sm hover:shadow-hover transition-all duration-300 fade-in-up delay-100 border border-transparent hover:border-gray-200">
-                    <div class="w-14 h-14 bg-garage-light rounded-2xl flex items-center justify-center mb-8 text-garage-blue text-2xl group-hover:bg-garage-blue group-hover:text-white transition-colors duration-300">
-                        <i class="ph-fill ph-barbell"></i>
+            <!-- Single Feature Card Layout -->
+            <div class="max-w-4xl mx-auto pt-8">
+                <div class="group bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm hover:shadow-hover transition-all duration-300 fade-in-up delay-100 border border-transparent hover:border-gray-200">
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        <!-- Icon -->
+                        <div class="shrink-0">
+                            <div class="w-20 h-20 bg-garage-light rounded-3xl flex items-center justify-center text-garage-blue text-4xl group-hover:bg-garage-blue group-hover:text-white transition-colors duration-300">
+                                <i class="ph-fill ph-barbell"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div>
+                            <h3 class="text-3xl font-bold text-garage-black mb-6">Personal Training</h3>
+                            <div class="prose prose-lg text-garage-gray mb-8">
+                                <p class="leading-relaxed">
+                                    We take a holistic approach to personal training at Garage 1880. Our personal trainers aim to help our clients gain confidence, develop a positive relationship with exercise, and improve mobility, strength, and endurance.
+                                </p>
+                                <p class="leading-relaxed mt-4">
+                                    We want clients to feel good in their body and movements for longevity and overall health.
+                                </p>
+                            </div>
+                            
+                            <button onclick="openHeroModal()" class="inline-flex items-center text-base font-bold text-garage-black group-hover:text-garage-blue transition-colors">
+                                Book Your Session <i class="ph-bold ph-arrow-right ml-2"></i>
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-garage-black mb-3">Personal Training</h3>
-                    <p class="text-garage-gray leading-relaxed mb-8">
-                        One-on-one, semi-private, and virtual training tailored to your goals. From strength building to mobility work, we meet you where you are.
-                    </p>
-                    <div class="flex items-center text-sm font-bold text-garage-black group-hover:text-garage-blue transition-colors">
-                        Learn more <i class="ph-bold ph-arrow-right ml-2"></i>
-                    </div>
-                </a>
-                <!-- Card 2 -->
-                <a href="/services" class="group bg-white p-8 md:p-12 rounded-3xl shadow-sm hover:shadow-hover transition-all duration-300 fade-in-up delay-200 border border-transparent hover:border-gray-200">
-                    <div class="w-14 h-14 bg-garage-light rounded-2xl flex items-center justify-center mb-8 text-garage-blue text-2xl group-hover:bg-garage-blue group-hover:text-white transition-colors duration-300">
-                        <i class="ph-fill ph-carrot"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-garage-black mb-3">Nutrition Coaching</h3>
-                    <p class="text-garage-gray leading-relaxed mb-8">
-                        Sustainable nutrition guidance that complements your training. No restrictive diets—just practical habits for lasting results.
-                    </p>
-                    <div class="flex items-center text-sm font-bold text-garage-black group-hover:text-garage-blue transition-colors">
-                        Learn more <i class="ph-bold ph-arrow-right ml-2"></i>
-                    </div>
-                </a>
+                </div>
             </div>
             
-            <div class="mt-8 text-center md:hidden">
-                <a href="/services" class="inline-flex items-center font-semibold text-garage-black hover:text-garage-blue transition-colors">
-                    View all services <i class="ph-bold ph-arrow-right ml-2"></i>
-                </a>
-            </div>
         </div>
     </section>
 
@@ -353,7 +342,7 @@
     <section id="testimonials" class="relative h-[300vh] bg-white">
         <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
             <div class="container mx-auto px-6 lg:px-12 mb-12 flex items-center justify-between fade-in-up relative z-10">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-garage-black tracking-tight">Client Stories</h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-garage-black tracking-tight">Testimonials</h2>
             </div>
 
             <div id="testimonial-track" class="flex gap-8 px-6 lg:px-12 w-max will-change-transform fade-in-up delay-100">
@@ -384,7 +373,7 @@
                         <div class="w-16 h-16 rounded-full bg-gray-200"></div>
                         <div>
                             <p class="text-sm font-bold text-garage-black">Sarah Jenkins</p>
-                            <p class="text-xs text-garage-gray">Nutrition Client</p>
+                            <p class="text-xs text-garage-gray">Personal Training</p>
                         </div>
                     </div>
                 </div>
@@ -410,19 +399,20 @@
     <!-- FOOTER -->
     <footer class="bg-gray-50 pt-20 pb-20 border-t border-gray-200">
         <div class="container mx-auto px-6 lg:px-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <!-- Changed grid-cols-4 to grid-cols-5 and reduced gap slightly to fit the new column -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-16">
                 <div class="space-y-4 fade-in-up">
                     <h5 class="text-lg font-extrabold text-garage-black">GARAGE 1880</h5>
                     <p class="text-sm text-garage-gray">Sunnyside, Denver</p>
                 </div>
+                
                 <div class="fade-in-up delay-100">
                     <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Services</h4>
                     <ul class="space-y-3 text-sm text-garage-gray">
                         <li><a href="/services" class="hover:text-garage-blue hover:underline transition-all">Personal Training</a></li>
-                        <li><a href="/services" class="hover:text-garage-blue hover:underline transition-all">Nutrition Coaching</a></li>
-                        <li><a href="#" class="opacity-50 cursor-not-allowed">Group Classes (Coming Soon)</a></li>
                     </ul>
                 </div>
+
                 <div class="fade-in-up delay-200">
                     <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Support</h4>
                     <ul class="space-y-3 text-sm text-garage-gray">
@@ -431,7 +421,18 @@
                         <li><a href="/fitnessblog" class="hover:text-garage-blue hover:underline transition-all">Blog</a></li>
                     </ul>
                 </div>
+
+                <!-- NEW SECTION: HOURS -->
                 <div class="fade-in-up delay-300">
+                    <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Hours</h4>
+                    <ul class="space-y-3 text-sm text-garage-gray">
+                        <li class="flex justify-between max-w-[180px]"><span>Mon – Fri</span> <span>6am – 7pm</span></li>
+                        <li class="flex justify-between max-w-[180px]"><span>Saturday</span> <span>Closed</span></li>
+                        <li class="flex justify-between max-w-[180px]"><span>Sunday</span> <span>Closed</span></li>
+                    </ul>
+                </div>
+
+                <div class="fade-in-up delay-400">
                     <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Visit Us</h4>
                     <address class="not-italic text-sm text-garage-gray leading-relaxed">
                         4255 Jason St Unit B<br>Sunnyside, Denver, CO 80211
@@ -475,7 +476,7 @@
                     </div>
                     <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-wider text-garage-gray ml-1">Email</label><input type="email" class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none" required></div>
                     <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-wider text-garage-gray ml-1">Interest</label>
-                        <div class="relative"><select class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none appearance-none cursor-pointer"><option>Personal Training</option><option>Nutrition Coaching</option><option>General Inquiry</option></select><i class="ph-bold ph-caret-down absolute right-4 top-1/2 -translate-y-1/2 text-garage-gray pointer-events-none"></i></div>
+                        <div class="relative"><select class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none appearance-none cursor-pointer"><option>Personal Training</option><option>General Inquiry</option></select><i class="ph-bold ph-caret-down absolute right-4 top-1/2 -translate-y-1/2 text-garage-gray pointer-events-none"></i></div>
                     </div>
                     <button type="submit" class="w-full bg-garage-black text-white font-bold rounded-2xl py-4 mt-4 hover:bg-garage-blue shadow-lg transition-all duration-300">Send Request</button>
                 </form>
