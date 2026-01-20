@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage 1880 | Personal Training in Sunnyside</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Phosphor) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        garage: {
+                            black: '#1d1d1f', 
+                            blue: '#0071e3',  
+                            darkblue: '#0058b0', 
+                            gray: '#86868b', 
+                            light: '#f5f5f7', 
+                            border: '#d2d2d7',
+                            warm: '#FF9F0A' 
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0,0,0,0.04)',
+                        'hover': '0 10px 30px rgba(0,0,0,0.08)',
+                        'dock': '0 20px 40px -10px rgba(0,0,0,0.15)',
+                        'glow': '0 0 20px rgba(0, 113, 227, 0.3)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'noise': "url('https://grainy-gradients.vercel.app/noise.svg')",
+                        'grid-pattern': "linear-gradient(to right, #e5e5e5 1px, transparent 1px), linear-gradient(to bottom, #e5e5e5 1px, transparent 1px)",
+                    },
+                    backgroundSize: {
+                        'grid-pattern': '40px 40px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        .img-hover-zoom { overflow: hidden; }
+        .img-hover-zoom img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .img-hover-zoom:hover img { transform: scale(1.05); }
+
+        .hero-container { perspective: 1000px; overflow: hidden; }
+        .parallax-wrapper { transform-style: preserve-3d; transition: transform 0.1s linear; }
+        
+        .nav-enter { animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; transform: translate(-50%, 100%); }
+        @keyframes slideUp { to { transform: translate(-50%, 0); } }
+
+        /* Marquee Mask */
+        .marquee-container {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+    </style>
+</head>
+<body class="bg-white text-garage-black font-sans antialiased selection:bg-garage-blue selection:text-white pb-32">
+
+    <!-- HERO SECTION (Video Background) -->
+    <header id="hero" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-garage-black">
+        
+        <!-- Video Background -->
+        <div class="absolute inset-0 z-0">
+            <!-- Updated to a clear Gym Video (Woman Training) -->
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 scale-105">
+                <source src="https://videos.pexels.com/video-files/8038769/8038769-hd_1920_1080_25fps.mp4" type="video/mp4">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Gym Background">
+            </video>
+            
+            <div class="absolute inset-0 bg-noise opacity-20 mix-blend-overlay"></div>
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-garage-black via-transparent to-black/40"></div>
+        </div>
+
+        <!-- VISUAL FLAIR: Ambient Orbs -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-garage-blue/30 rounded-full blur-[100px] animate-pulse-slow mix-blend-screen pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-garage-warm/20 rounded-full blur-[80px] animate-pulse-slow mix-blend-screen pointer-events-none animation-delay-2000"></div>
+
+        <!-- Content -->
+        <div id="scene" class="parallax-wrapper relative w-full h-full max-w-7xl mx-auto flex items-center justify-center z-10">
+            <div class="relative z-20 text-center px-6 max-w-5xl" data-depth="0.1">
+                
+                <div class="fade-in-up inline-block mb-6 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-sm font-semibold tracking-wide uppercase shadow-lg text-white">
+                    Since 2022 • Sunnyside, Denver
+                </div>
+                
+                <h2 class="fade-in-up delay-100 text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tight leading-[0.95] text-white mb-8 drop-shadow-2xl">
+                    Personal Training <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-garage-blue via-blue-200 to-white">in Sunnyside.</span>
+                </h2>
+                
+                <p class="fade-in-up delay-200 text-xl md:text-2xl text-gray-100 max-w-2xl mx-auto mb-10 font-medium leading-relaxed drop-shadow-md">
+                    Sustainable fitness plans designed for real life.
+                </p>
+
+                <!-- HERO CTA (Opens Centered Modal) -->
+                <div class="fade-in-up delay-300">
+                    <button onclick="openHeroModal()" class="px-8 py-4 bg-garage-blue text-white text-lg font-bold rounded-full hover:bg-white hover:text-garage-blue transition-all shadow-glow hover:shadow-xl transform hover:-translate-y-1 ring-4 ring-white/10 hover:ring-white/30">
+                        Book Your Session
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="fade-in-up delay-500 absolute bottom-32 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-80 animate-bounce z-20 text-white">
+            <span class="text-xs font-bold uppercase tracking-widest text-white/70">Scroll</span>
+            <i class="ph-bold ph-arrow-down text-white"></i>
+        </div>
+    </header>
+
+    <!-- FLOATING BOTTOM NAVIGATION -->
+    <nav class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 w-[90%] md:w-auto nav-enter">
+        <div class="bg-white/80 backdrop-blur-xl border border-white/20 shadow-dock rounded-full p-2 pl-6 pr-2 flex items-center justify-between md:justify-start gap-4 md:gap-8 transition-all duration-300 hover:scale-[1.01] hover:bg-white/90">
+            
+            <a href="#" class="text-lg font-extrabold tracking-tight text-garage-black hover:text-garage-blue transition-colors whitespace-nowrap">
+                GARAGE 1880
+            </a>
+
+            <div class="hidden md:flex items-center gap-1 bg-garage-light/80 rounded-full px-2 py-1">
+                <a href="#services" class="px-4 py-2 text-sm font-medium text-garage-gray hover:text-garage-black hover:bg-white rounded-full transition-all">Services</a>
+                <a href="#philosophy" class="px-4 py-2 text-sm font-medium text-garage-gray hover:text-garage-black hover:bg-white rounded-full transition-all">About</a>
+                <a href="#" onclick="openHeroModal()" class="px-4 py-2 text-sm font-medium text-garage-gray hover:text-garage-black hover:bg-white rounded-full transition-all">Contact</a>
+                <a href="/fitnessblog" class="px-4 py-2 text-sm font-medium text-garage-gray hover:text-garage-black hover:bg-white rounded-full transition-all">Blog</a>
+            </div>
+
+            <!-- Action Area -->
+            <div class="flex items-center gap-2 relative">
+                <!-- Nav CTA (Opens Popover) -->
+                <button id="nav-book-btn" onclick="toggleNavPopover(event)" class="px-6 py-3 bg-garage-black text-white text-sm font-bold rounded-full hover:bg-garage-blue hover:shadow-lg transition-all transform hover:-translate-y-0.5 whitespace-nowrap">
+                    Book Now
+                </button>
+                
+                <!-- NAV POPOVER (Anchored to Nav) -->
+                <div id="nav-popover" class="absolute bottom-full right-0 mb-6 origin-bottom-right transition-all duration-300 opacity-0 pointer-events-none scale-95 z-[60]">
+                    <div class="bg-white w-80 md:w-96 rounded-[2rem] shadow-2xl border border-gray-200 p-6 md:p-8 overflow-hidden">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h3 class="text-xl font-extrabold text-garage-black">Quick Contact</h3>
+                                <p class="text-garage-gray text-xs mt-1">We'll get back to you within 24 hours.</p>
+                            </div>
+                            <button onclick="closeNavPopover()" class="w-8 h-8 flex items-center justify-center rounded-full bg-garage-light text-garage-gray hover:bg-gray-200 hover:text-garage-black transition-colors">
+                                <i class="ph-bold ph-x"></i>
+                            </button>
+                        </div>
+                        <form class="space-y-3" onsubmit="event.preventDefault(); alert('Sent!'); closeNavPopover();">
+                             <input type="email" class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-xl px-3 py-2 text-sm outline-none" placeholder="Your Email" required>
+                             <button type="submit" class="w-full bg-garage-black text-white font-bold rounded-xl py-3 mt-2 hover:bg-garage-blue transition-colors text-sm">Let's Talk</button>
+                        </form>
+                    </div>
+                </div>
+
+                <button id="menu-btn" class="md:hidden w-11 h-11 flex items-center justify-center rounded-full bg-garage-light text-garage-black hover:bg-gray-200 transition-colors">
+                    <i class="ph ph-list text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 opacity-0 pointer-events-none transition-all duration-500 transform translate-y-10">
+        <a href="#services" class="text-3xl font-bold text-garage-black mobile-link hover:text-garage-blue">Services</a>
+        <a href="#philosophy" class="text-3xl font-bold text-garage-black mobile-link hover:text-garage-blue">About</a>
+        <a href="#" onclick="openHeroModal(); toggleMenu()" class="text-3xl font-bold text-garage-black mobile-link hover:text-garage-blue">Contact</a>
+        <a href="/fitnessblog" class="text-3xl font-bold text-garage-black mobile-link hover:text-garage-blue">Blog</a>
+        <button class="mobile-link text-garage-gray text-lg flex items-center gap-2 mt-8">
+            <i class="ph ph-x"></i> Close
+        </button>
+    </div>
+
+    <!-- PHILOSOPHY SECTION -->
+    <section id="philosophy" class="py-24 bg-white rounded-t-[3rem] -mt-10 relative z-30 overflow-hidden">
+        <!-- Decoration: Subtle Grid -->
+        <div class="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none"></div>
+        <!-- Decoration: Orbs -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-garage-light rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-50 rounded-full blur-3xl opacity-60 translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                <div class="lg:w-5/12 sticky top-32">
+                    <span class="fade-in-up text-garage-blue font-bold uppercase tracking-wider text-xs mb-3 block">Our Philosophy</span>
+                    <h2 class="fade-in-up delay-75 text-4xl md:text-5xl font-extrabold text-garage-black mb-8 leading-tight tracking-tight">
+                        Aim for <br>1% better.
+                    </h2>
+                    <div class="fade-in-up delay-100 prose prose-lg text-garage-gray leading-loose">
+                        <p class="mb-6">
+                            There are no quick fixes that lead to lasting change. At Garage 1880, you won't find cookie-cutter plans, unsustainable methods, or extremes.
+                        </p>
+                        <p>
+                            What you will find is a team that meets you where you are. Change takes time. We're here to create habits and results for life.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                    <div class="space-y-8 md:mt-16">
+                        <div class="fade-in-up delay-200 aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl img-hover-zoom bg-gray-100 border border-gray-100">
+                            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Weights">
+                        </div>
+                        <div class="fade-in-up delay-300 p-8 bg-garage-light rounded-[2rem] border border-white shadow-soft">
+                            <h3 class="font-bold text-xl mb-2">Real Focus</h3>
+                            <p class="text-sm text-garage-gray">Private sessions where the attention is 100% on your form.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="fade-in-up delay-300 p-8 bg-garage-light rounded-[2rem] border border-white shadow-soft">
+                            <h3 class="font-bold text-xl mb-2">Sustainable</h3>
+                            <p class="text-sm text-garage-gray">Plans built around your life, not the other way around.</p>
+                        </div>
+                        <div class="fade-in-up delay-500 aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl img-hover-zoom bg-gray-100 border border-gray-100">
+                            <img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2069&auto=format&fit=crop" class="w-full h-full object-cover" alt="Interior">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: THE SPACE GALLERY -->
+    <section class="py-24 bg-white relative">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="text-center mb-16 fade-in-up">
+                <span class="text-garage-blue font-bold uppercase tracking-wider text-xs mb-3 block">The Space</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-garage-black tracking-tight">Where We Train</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Gallery Item 1 -->
+                <div class="group relative aspect-[3/4] md:aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer fade-in-up delay-100">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Gym Floor">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+                    <!-- Flair: Floating Badge -->
+                    <div class="absolute bottom-6 left-6 px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-semibold translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        The Main Floor
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 (Offset) -->
+                <div class="group relative aspect-[3/4] md:aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer md:translate-y-12 fade-in-up delay-200">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Training Equipment">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-6 left-6 px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-semibold translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        Equipment
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="group relative aspect-[3/4] md:aspect-[4/5] rounded-[2rem] overflow-hidden cursor-pointer fade-in-up delay-300">
+                    <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=2075&auto=format&fit=crop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Community">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-6 left-6 px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white text-sm font-semibold translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                        Community
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES PREVIEW -->
+    <section id="services" class="py-24 bg-garage-light relative overflow-hidden">
+        <div class="absolute inset-0 bg-noise opacity-[0.03]"></div>
+        <div class="container mx-auto px-6 lg:px-12 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 fade-in-up">
+                <div class="max-w-xl">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-garage-black mb-4 tracking-tight">How we train</h2>
+                    <p class="text-garage-gray text-lg">Holistic approaches tailored to your specific needs.</p>
+                </div>
+                <a href="/services" class="hidden md:inline-flex items-center font-semibold text-garage-black hover:text-garage-blue transition-colors mt-4 md:mt-0">
+                    View all services <i class="ph-bold ph-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+                <!-- Card 1 -->
+                <a href="/services" class="group bg-white p-8 md:p-12 rounded-3xl shadow-sm hover:shadow-hover transition-all duration-300 fade-in-up delay-100 border border-transparent hover:border-gray-200">
+                    <div class="w-14 h-14 bg-garage-light rounded-2xl flex items-center justify-center mb-8 text-garage-blue text-2xl group-hover:bg-garage-blue group-hover:text-white transition-colors duration-300">
+                        <i class="ph-fill ph-barbell"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-garage-black mb-3">Personal Training</h3>
+                    <p class="text-garage-gray leading-relaxed mb-8">
+                        One-on-one, semi-private, and virtual training tailored to your goals. From strength building to mobility work, we meet you where you are.
+                    </p>
+                    <div class="flex items-center text-sm font-bold text-garage-black group-hover:text-garage-blue transition-colors">
+                        Learn more <i class="ph-bold ph-arrow-right ml-2"></i>
+                    </div>
+                </a>
+                <!-- Card 2 -->
+                <a href="/services" class="group bg-white p-8 md:p-12 rounded-3xl shadow-sm hover:shadow-hover transition-all duration-300 fade-in-up delay-200 border border-transparent hover:border-gray-200">
+                    <div class="w-14 h-14 bg-garage-light rounded-2xl flex items-center justify-center mb-8 text-garage-blue text-2xl group-hover:bg-garage-blue group-hover:text-white transition-colors duration-300">
+                        <i class="ph-fill ph-carrot"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-garage-black mb-3">Nutrition Coaching</h3>
+                    <p class="text-garage-gray leading-relaxed mb-8">
+                        Sustainable nutrition guidance that complements your training. No restrictive diets—just practical habits for lasting results.
+                    </p>
+                    <div class="flex items-center text-sm font-bold text-garage-black group-hover:text-garage-blue transition-colors">
+                        Learn more <i class="ph-bold ph-arrow-right ml-2"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="mt-8 text-center md:hidden">
+                <a href="/services" class="inline-flex items-center font-semibold text-garage-black hover:text-garage-blue transition-colors">
+                    View all services <i class="ph-bold ph-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="relative h-[300vh] bg-white">
+        <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+            <div class="container mx-auto px-6 lg:px-12 mb-12 flex items-center justify-between fade-in-up relative z-10">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-garage-black tracking-tight">Client Stories</h2>
+            </div>
+
+            <div id="testimonial-track" class="flex gap-8 px-6 lg:px-12 w-max will-change-transform fade-in-up delay-100">
+                <div class="w-[85vw] md:w-[600px] bg-garage-light rounded-3xl p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center border border-transparent transition-all hover:border-gray-200 shrink-0">
+                    <div class="w-24 h-24 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden shadow-lg border-4 border-white">
+                        <img src="https://static.wixstatic.com/media/eefe7f_479f80a4ae694805847d2ec3fbe8e189~mv2.png" alt="Jessica" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex text-garage-blue mb-3">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-lg text-garage-black font-medium leading-relaxed mb-4">
+                            "The real progress can't be captured in a picture because it's a feeling. I have more energy and confidence. I am more myself than I have been in years."
+                        </p>
+                        <p class="text-sm font-bold text-garage-black uppercase tracking-wide">Jessica Minnen</p>
+                        <p class="text-xs text-garage-gray">Personal Training Client</p>
+                    </div>
+                </div>
+                <!-- Placeholders... -->
+                <div class="w-[85vw] md:w-[400px] bg-white border border-gray-200 rounded-3xl p-8 flex flex-col justify-between hover:shadow-lg transition-shadow shrink-0">
+                    <div>
+                        <div class="flex text-garage-blue mb-4">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-garage-gray mb-6 leading-relaxed">"Garage 1880 completely changed my perspective on fitness. The environment is so welcoming and the trainers really care about your long-term health."</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-gray-200"></div>
+                        <div>
+                            <p class="text-sm font-bold text-garage-black">Sarah Jenkins</p>
+                            <p class="text-xs text-garage-gray">Nutrition Client</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-[85vw] md:w-[400px] bg-white border border-gray-200 rounded-3xl p-8 flex flex-col justify-between hover:shadow-lg transition-shadow shrink-0">
+                    <div>
+                         <div class="flex text-garage-blue mb-4">
+                            <i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i>
+                        </div>
+                        <p class="text-garage-gray mb-6 leading-relaxed">"The best investment I've made in myself this year. The facility is beautiful and the vibe is always positive."</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-gray-200"></div>
+                        <div>
+                            <p class="text-sm font-bold text-garage-black">Alex T.</p>
+                            <p class="text-xs text-garage-gray">One-on-One Training</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-50 pt-20 pb-20 border-t border-gray-200">
+        <div class="container mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-4 fade-in-up">
+                    <h5 class="text-lg font-extrabold text-garage-black">GARAGE 1880</h5>
+                    <p class="text-sm text-garage-gray">Sunnyside, Denver</p>
+                </div>
+                <div class="fade-in-up delay-100">
+                    <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Services</h4>
+                    <ul class="space-y-3 text-sm text-garage-gray">
+                        <li><a href="/services" class="hover:text-garage-blue hover:underline transition-all">Personal Training</a></li>
+                        <li><a href="/services" class="hover:text-garage-blue hover:underline transition-all">Nutrition Coaching</a></li>
+                        <li><a href="#" class="opacity-50 cursor-not-allowed">Group Classes (Coming Soon)</a></li>
+                    </ul>
+                </div>
+                <div class="fade-in-up delay-200">
+                    <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Support</h4>
+                    <ul class="space-y-3 text-sm text-garage-gray">
+                        <li><a href="tel:7207456158" class="hover:text-garage-blue hover:underline transition-all">(720) 745-6158</a></li>
+                        <li><a href="#" onclick="openHeroModal()" class="hover:text-garage-blue hover:underline transition-all">Contact Us</a></li>
+                        <li><a href="/fitnessblog" class="hover:text-garage-blue hover:underline transition-all">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="fade-in-up delay-300">
+                    <h4 class="text-sm font-bold text-garage-black uppercase tracking-wide mb-6">Visit Us</h4>
+                    <address class="not-italic text-sm text-garage-gray leading-relaxed">
+                        4255 Jason St Unit B<br>Sunnyside, Denver, CO 80211
+                    </address>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="https://www.instagram.com/garage1880_/" class="text-xl text-garage-gray hover:text-garage-blue transition-colors"><i class="ph-fill ph-instagram-logo"></i></a>
+                        <a href="https://www.facebook.com/Garage1880" class="text-xl text-garage-gray hover:text-garage-blue transition-colors"><i class="ph-fill ph-facebook-logo"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="fade-in-up delay-500 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-garage-gray font-medium">
+                <p>©2025 Garage 1880</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-garage-black">Privacy</a>
+                    <a href="#" class="hover:text-garage-black">Terms</a>
+                    <a href="#" class="hover:text-garage-black">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- HERO MODAL (Centered, Separate from Nav) -->
+    <div id="hero-modal" class="fixed inset-0 z-[100] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-garage-black/50 backdrop-blur-md" onclick="closeHeroModal()"></div>
+        
+        <!-- Modal Card -->
+        <div class="relative bg-white w-full max-w-lg mx-4 rounded-[2rem] shadow-2xl transform scale-95 transition-all duration-300 p-8 md:p-10 overflow-hidden">
+            <button onclick="closeHeroModal()" class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-garage-light text-garage-gray hover:bg-gray-200 hover:text-garage-black transition-colors">
+                <i class="ph-bold ph-x text-lg"></i>
+            </button>
+            <div class="space-y-6">
+                <div class="text-center">
+                    <h3 class="text-2xl font-extrabold text-garage-black">Start Your Journey</h3>
+                    <p class="text-garage-gray mt-2 text-sm">Tell us about your goals. We'll get back to you within 24 hours.</p>
+                </div>
+                <form class="space-y-4" onsubmit="event.preventDefault(); alert('Request Sent!'); closeHeroModal();">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-wider text-garage-gray ml-1">First Name</label><input type="text" class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none" required></div>
+                        <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-wider text-garage-gray ml-1">Last Name</label><input type="text" class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none" required></div>
+                    </div>
+                    <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-wider text-garage-gray ml-1">Email</label><input type="email" class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none" required></div>
+                    <div class="space-y-1"><label class="text-xs font-bold uppercase tracking-wider text-garage-gray ml-1">Interest</label>
+                        <div class="relative"><select class="w-full bg-garage-light border-transparent focus:border-garage-blue focus:bg-white focus:ring-0 rounded-2xl px-4 py-3 outline-none appearance-none cursor-pointer"><option>Personal Training</option><option>Nutrition Coaching</option><option>General Inquiry</option></select><i class="ph-bold ph-caret-down absolute right-4 top-1/2 -translate-y-1/2 text-garage-gray pointer-events-none"></i></div>
+                    </div>
+                    <button type="submit" class="w-full bg-garage-black text-white font-bold rounded-2xl py-4 mt-4 hover:bg-garage-blue shadow-lg transition-all duration-300">Send Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. HERO MODAL LOGIC (Centered)
+        const heroModal = document.getElementById('hero-modal');
+        const heroModalContent = heroModal.querySelector('div.relative');
+
+        function openHeroModal() {
+            heroModal.classList.remove('opacity-0', 'pointer-events-none');
+            heroModalContent.classList.remove('scale-95');
+            heroModalContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeHeroModal() {
+            heroModal.classList.add('opacity-0', 'pointer-events-none');
+            heroModalContent.classList.remove('scale-100');
+            heroModalContent.classList.add('scale-95');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 2. NAV POPOVER LOGIC (Anchored)
+        const navPopover = document.getElementById('nav-popover');
+        const navBtn = document.getElementById('nav-book-btn');
+        let isNavPopoverOpen = false;
+
+        function toggleNavPopover(event) {
+            if(event) event.stopPropagation();
+            if (isNavPopoverOpen) { closeNavPopover(); } else { openNavPopover(); }
+        }
+
+        function openNavPopover() {
+            navPopover.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+            navPopover.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            isNavPopoverOpen = true;
+            document.addEventListener('click', handleNavOutsideClick);
+        }
+
+        function closeNavPopover() {
+            navPopover.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+            navPopover.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+            isNavPopoverOpen = false;
+            document.removeEventListener('click', handleNavOutsideClick);
+        }
+
+        function handleNavOutsideClick(event) {
+            if (!navPopover.contains(event.target) && !navBtn.contains(event.target)) {
+                closeNavPopover();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closeHeroModal(); closeNavPopover(); }
+        });
+
+        // 3. Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                document.body.style.overflow = 'hidden'; 
+            } else {
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // 4. Parallax & Scroll (Existing Logic)
+        const scene = document.getElementById('scene');
+        if (window.matchMedia("(min-width: 768px)").matches) {
+            const hero = document.getElementById('hero');
+            const layers = document.querySelectorAll('[data-depth]');
+            hero.addEventListener('mousemove', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                layers.forEach(layer => {
+                    const depth = layer.getAttribute('data-depth');
+                    const moveX = (window.innerWidth * depth * x) - (window.innerWidth * depth * 0.5);
+                    const moveY = (window.innerHeight * depth * y) - (window.innerHeight * depth * 0.5);
+                    layer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+                });
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        const stickySection = document.getElementById('testimonials');
+        const track = document.getElementById('testimonial-track');
+        window.addEventListener('scroll', () => {
+            if(!stickySection || !track) return;
+            const offsetTop = stickySection.offsetTop;
+            const scrollDistance = stickySection.offsetHeight - window.innerHeight;
+            const scrolled = window.scrollY - offsetTop;
+            if (window.scrollY >= offsetTop && window.scrollY <= offsetTop + scrollDistance) {
+                const percentage = scrolled / scrollDistance;
+                const maxScroll = track.scrollWidth - window.innerWidth + 100; 
+                track.style.transform = `translateX(-${percentage * Math.max(0, maxScroll)}px)`;
+            } 
+            else if (window.scrollY < offsetTop) { track.style.transform = `translateX(0px)`; } 
+            else if (window.scrollY > offsetTop + scrollDistance) { 
+                 const maxScroll = track.scrollWidth - window.innerWidth + 100;
+                 track.style.transform = `translateX(-${Math.max(0, maxScroll)}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
