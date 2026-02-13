@@ -18,50 +18,41 @@ export default function BlogCard({
   coverImageUrl,
 }: BlogCardProps) {
   return (
-    <Link href={`/fitnessblog/${slug}`} className="group block">
-      <article className="bg-white rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 h-full flex flex-col">
-        {coverImageUrl && (
-          <div className="img-hover-zoom aspect-[16/10]">
+    <Link href={`/fitnessblog/${slug}`} className="group block h-full">
+      <article className="h-full overflow-hidden border border-garage-border bg-white transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-soft">
+        {coverImageUrl ? (
+          <div className="overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={coverImageUrl}
               alt={title}
-              className="w-full h-full object-cover"
+              className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
           </div>
-        )}
-        <div className="p-6 flex flex-col flex-1">
-          <div className="flex items-center gap-2 text-sm text-garage-gray mb-3">
+        ) : null}
+
+        <div className="p-6">
+          <div className="mb-3 flex items-center gap-2 text-xs text-garage-gray">
             <time>{date}</time>
-            {minutesToRead && (
+            {minutesToRead ? (
               <>
                 <span>&middot;</span>
                 <span>{minutesToRead} min read</span>
               </>
-            )}
+            ) : null}
           </div>
-          <h3 className="text-lg font-semibold text-garage-black group-hover:text-garage-blue transition-colors mb-2 line-clamp-2">
+
+          <h3 className="font-display text-2xl text-garage-black transition-colors group-hover:text-garage-blue">
             {title}
           </h3>
-          <p className="text-garage-gray text-sm line-clamp-3 flex-1">
+          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-garage-gray">
             {excerpt}
           </p>
-          <span className="text-garage-blue text-sm font-medium mt-4 inline-flex items-center gap-1">
+
+          <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-garage-blue">
             Read more
-            <svg
-              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+            <span className="transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
           </span>
         </div>
       </article>

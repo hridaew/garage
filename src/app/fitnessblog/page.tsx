@@ -1,7 +1,10 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { getAllPosts } from "@/lib/wix-blog";
 import BlogCard from "@/components/blog/BlogCard";
-import Link from "next/link";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Reveal from "@/components/motion/Reveal";
+import ContentContainer from "@/components/layout/ContentContainer";
 
 export const revalidate = 3600;
 
@@ -20,7 +23,10 @@ function formatDate(dateStr: string | Date | null | undefined): string {
   });
 }
 
-function getCoverImageUrl(post: { media?: { wixMedia?: { image?: string } }; coverImage?: string }): string | undefined {
+function getCoverImageUrl(post: {
+  media?: { wixMedia?: { image?: string } };
+  coverImage?: string;
+}): string | undefined {
   const imageUrl = post.media?.wixMedia?.image || post.coverImage;
   if (!imageUrl) return undefined;
   if (imageUrl.startsWith("http")) return imageUrl;
@@ -34,50 +40,58 @@ function getCoverImageUrl(post: { media?: { wixMedia?: { image?: string } }; cov
 export default async function BlogPage() {
   const response = await getAllPosts(20);
   const posts = response.posts || [];
+  const wixUnavailable = response.meta?.wixUnavailable;
 
   return (
-    <main className="min-h-screen bg-garage-light">
-      <div className="bg-garage-black text-white py-20">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-            Garage 1880 Fitness Blog
-          </h1>
-          <p className="text-garage-gray text-lg max-w-2xl mx-auto">
-            Tips, insights, and stories from our trainers to help you become 1%
-            better every day.
-          </p>
-        </div>
-      </div>
+    <section className="section-space-md pt-28 md:pt-34">
+      <ContentContainer>
+        <SectionHeading
+          eyebrow="Fitness Blog"
+          title="Garage 1880 Fitness Blog"
+          description="Tips, insights, and stories from our trainers to help you become 1% better every day."
+        />
 
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        {posts.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-garage-gray text-lg">
-              No blog posts yet. Check back soon!
-            </p>
-            <Link
-              href="/"
-              className="text-garage-blue hover:underline mt-4 inline-block"
-            >
-              &larr; Back to home
-            </Link>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post) => (
-              <BlogCard
-                key={post._id}
-                title={post.title || "Untitled"}
-                excerpt={post.excerpt || ""}
-                slug={post.slug || ""}
-                date={formatDate(post.firstPublishedDate)}
-                minutesToRead={post.minutesToRead}
-                coverImageUrl={getCoverImageUrl(post)}
-              />
+        {wixUnavailable ? (
+          <Reveal className="mt-10">
+            <div className="border border-garage-border border border-garage-border bg-white p-8 text-garage-gray">
+              <p className="text-base">
+                Blog content is temporarily unavailable in this environment. Wix credentials may not be configured.
+              </p>
+              <Link href="/" className="mt-4 inline-block text-sm font-semibold text-garage-blue hover:underline">
+                Back to home
+              </Link>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {!wixUnavailable && posts.length === 0 ? (
+          <Reveal className="mt-10">
+            <div className="border border-garage-border border border-garage-border bg-white p-8 text-garage-gray">
+              <p>No blog posts yet. Check back soon.</p>
+              <Link href="/" className="mt-4 inline-block text-sm font-semibold text-garage-blue hover:underline">
+                Back to home
+              </Link>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {posts.length > 0 ? (
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post, index) => (
+              <Reveal key={post._id} delay={index * 0.04} preset="scale">
+                <BlogCard
+                  title={post.title || "Untitled"}
+                  excerpt={post.excerpt || ""}
+                  slug={post.slug || ""}
+                  date={formatDate(post.firstPublishedDate)}
+                  minutesToRead={post.minutesToRead}
+                  coverImageUrl={getCoverImageUrl(post)}
+                />
+              </Reveal>
             ))}
           </div>
-        )}
-      </div>
-    </main>
+        ) : null}
+      </ContentContainer>
+    </section>
   );
 }

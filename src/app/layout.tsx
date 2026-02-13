@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Instrument_Sans } from "next/font/google";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import RouteTransitionLayer from "@/components/motion/RouteTransitionLayer";
+import LoadingScreen from "@/components/motion/LoadingScreen";
 import "./globals.css";
 
-const inter = Inter({
+const bodyFont = DM_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "800"],
-  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-body",
+});
+
+const displayFont = Instrument_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -82,10 +92,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} font-sans bg-white text-garage-black antialiased selection:bg-garage-blue selection:text-white`}
+        className={`${bodyFont.variable} ${displayFont.variable} font-sans bg-garage-canvas text-garage-ink antialiased`}
       >
         <GoogleAnalytics />
-        {children}
+        <LoadingScreen />
+        <RouteTransitionLayer>{children}</RouteTransitionLayer>
       </body>
     </html>
   );

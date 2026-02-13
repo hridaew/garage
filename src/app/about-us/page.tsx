@@ -1,7 +1,10 @@
 import { Metadata } from "next";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import FadeInUp from "@/components/ui/FadeInUp";
+import Image from "next/image";
+import SiteShell from "@/components/layout/SiteShell";
+import Reveal from "@/components/motion/Reveal";
+import ContentContainer from "@/components/layout/ContentContainer";
+import { trainers } from "@/components/services/trainers-data";
+import MosaicBackground from "@/components/about/MosaicBackground";
 
 export const metadata: Metadata = {
   title: "About Us | Best Personal Training in Sunnyside",
@@ -9,136 +12,103 @@ export const metadata: Metadata = {
     "Meet the Garage 1880 team. Founded by Allie with a vision to provide the highest quality personal training by attracting the highest quality trainers.",
 };
 
-const team = [
-  {
-    name: "Veronica Attanasio",
-    role: "Personal Training Director",
-    bio: "Veronica specializes in muscular endurance, strength, and hypertrophy training. Originally from Miami, FL, she trained at Equinox as a Tier3+ trainer.",
-    certs: "AFPA, NASM, PNL1, PPSC, AED, CPR",
-  },
-  {
-    name: "Rebekah Mclain",
-    role: "Lead Trainer",
-    bio: "With nearly ten years of experience, Rebekah specializes in strength and hypertrophy training. She also has experience helping endurance athletes optimize their gym workouts.",
-    certs: "",
-  },
-  {
-    name: "Walter Bryant",
-    role: "Trainer",
-    bio: "Walter brings energy and expertise to every session, helping clients push past their limits while maintaining proper form and technique.",
-    certs: "",
-  },
-  {
-    name: "Derrick",
-    role: "Trainer",
-    bio: "Derrick focuses on building functional strength and helping clients develop confidence in their training journey.",
-    certs: "",
-  },
-];
-
 export default function AboutUsPage() {
   return (
-    <div className="pb-32">
-      <Navbar />
-
-      {/* Hero */}
-      <div className="bg-garage-black text-white py-32">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <FadeInUp>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-              Our Story
-            </h1>
-          </FadeInUp>
+    <SiteShell>
+      {/* Dark hero — left-aligned */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/images/about/team.jpg"
+            alt="Garage 1880 team"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-[rgb(var(--garage-hero-dark))]/70" />
         </div>
-      </div>
 
-      {/* Story */}
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-6">
-          <FadeInUp>
-            <div className="text-lg text-garage-gray leading-relaxed space-y-6">
-              <p>
-                As you may have guessed from our name, Garage 1880 started in an
-                actual garage. But before we were even in a garage, our founder
-                Allie was working at training studios, commercial gyms, and
-                building up her own clientele through social media.
-              </p>
-              <p>
-                As Allie worked at different studios and gyms she saw the same
-                pattern over and over again: Trainers were not able to make
-                enough money when they got started to pay for basic needs, so
-                they picked up side jobs. This led to trainers having little
-                energy to focus on their personal training clients and eventually
-                quitting personal training.
-              </p>
-              <p className="font-bold text-garage-black text-xl">
-                Allie opened Garage 1880 with the vision of being able to
-                provide the highest quality training by attracting the highest
-                quality trainers.
-              </p>
-              <p>
-                The best way to do that? Pay a fair and livable wage day one.
-                Provide high quality continuing education, create a team
-                environment with monthly seminars and create the standard of
-                listening to clients and addressing needs on a personalized,
-                case-by-case, basis.
-              </p>
-              <p className="italic">
-                We take care of our trainers so they can take care of you!
-              </p>
+        <ContentContainer>
+          <div className="flex min-h-[56vh] items-center py-28 md:py-32">
+            <div className="max-w-xl">
+              <Reveal>
+                <h1 className="type-h1 text-white">Our Story</h1>
+              </Reveal>
             </div>
-          </FadeInUp>
-        </div>
+          </div>
+        </ContentContainer>
       </section>
 
-      {/* Team */}
-      <section className="py-20 bg-garage-light">
-        <div className="max-w-6xl mx-auto px-6">
-          <FadeInUp className="text-center mb-16">
-            <span className="text-garage-blue font-bold uppercase tracking-wider text-xs mb-3 block">
-              The Team
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-garage-black tracking-tight">
-              Meet Our Trainers
-            </h2>
-          </FadeInUp>
+      <section className="section-space-lg relative overflow-hidden">
+        {/* Mosaic background */}
+        <MosaicBackground />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {team.map((member, i) => (
-              <FadeInUp
-                key={member.name}
-                delay={i * 100}
-                className="bg-white rounded-[2rem] p-8 shadow-soft hover:shadow-hover transition-all duration-300"
-              >
-                <div className="flex flex-col sm:flex-row gap-6">
-                  <div className="w-24 h-24 shrink-0 rounded-2xl bg-garage-light flex items-center justify-center text-garage-blue text-3xl font-bold">
-                    {member.name.charAt(0)}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-garage-black">
-                      {member.name}
-                    </h3>
-                    <p className="text-garage-blue font-medium text-sm mb-3">
-                      {member.role}
-                    </p>
-                    <p className="text-garage-gray text-sm leading-relaxed">
-                      {member.bio}
-                    </p>
-                    {member.certs && (
-                      <p className="text-xs text-garage-gray mt-3">
-                        <span className="font-semibold">Certs:</span>{" "}
-                        {member.certs}
+        <ContentContainer className="relative z-10">
+          <Reveal>
+            <div className="mx-auto max-w-3xl space-y-6 border border-garage-border bg-white p-8 type-body text-garage-gray shadow-[0_20px_50px_rgba(0,0,0,0.08)] md:p-10">
+              <p>
+                As you may have guessed from our name, Garage 1880 started in an actual garage. But before we were
+                even in a garage, our founder Allie was working at training studios, commercial gyms, and building up
+                her own clientele through social media.
+              </p>
+              <p>
+                As Allie worked at different studios and gyms she saw the same pattern over and over again: Trainers
+                were not able to make enough money when they got started to pay for basic needs, so they picked up
+                side jobs. This led to trainers having little energy to focus on their personal training clients and
+                eventually quitting personal training.
+              </p>
+              <p className="type-h3 text-garage-black">
+                Allie opened Garage 1880 with the vision of being able to provide the highest quality training by
+                attracting the highest quality trainers.
+              </p>
+              <p>
+                The best way to do that? Pay a fair and livable wage day one. Provide high quality continuing
+                education, create a team environment with monthly seminars and create the standard of listening to
+                clients and addressing needs on a personalized, case-by-case, basis.
+              </p>
+              <p className="italic">We take care of our trainers so they can take care of you!</p>
+            </div>
+          </Reveal>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md">
+        <ContentContainer>
+          <Reveal>
+            <h2 className="type-h2 text-garage-black">Meet Our Trainers</h2>
+          </Reveal>
+          <div className="mt-12 space-y-5">
+            {trainers.map((trainer, index) => (
+              <Reveal key={trainer.id} delay={index * 0.04}>
+                <article className="border border-garage-border bg-white p-6 md:p-7">
+                  <div className="flex flex-col gap-6 md:flex-row md:items-start">
+                    <div className="md:w-[300px] md:shrink-0">
+                      <div className="flex items-center gap-4 md:block md:text-center">
+                        <div className="h-32 w-32 shrink-0 overflow-hidden rounded-full border border-garage-border bg-garage-panel md:mx-auto md:h-40 md:w-40">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" />
+                        </div>
+                        <div className="md:mt-4">
+                          <h3 className="type-h3 text-garage-black">{trainer.name}</h3>
+                          <p className="mt-2 type-label text-garage-blue">{trainer.role}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex-1 border-t border-garage-border pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+                      <p className="type-body text-garage-gray">{trainer.bio}</p>
+                      <p className="mt-4 type-body text-garage-gray">
+                        <span className="font-semibold text-garage-black">Certs:</span> {trainer.certs}
                       </p>
-                    )}
+                    </div>
                   </div>
-                </div>
-              </FadeInUp>
+                </article>
+              </Reveal>
             ))}
           </div>
-        </div>
+        </ContentContainer>
       </section>
-
-      <Footer />
-    </div>
+    </SiteShell>
   );
 }

@@ -1,156 +1,199 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import FadeInUp from "@/components/ui/FadeInUp";
+import Image from "next/image";
+import SiteShell from "@/components/layout/SiteShell";
+import Reveal from "@/components/motion/Reveal";
+import ConsultTrigger from "@/components/ui/ConsultTrigger";
+import SectionHeading from "@/components/ui/SectionHeading";
+import ContentContainer from "@/components/layout/ContentContainer";
+import TrainerGrid from "@/components/services/TrainerGrid";
+import MovementAssessmentForm from "@/components/services/MovementAssessmentForm";
+
+const services = [
+  {
+    title: "Personal Training",
+    image: "/images/services/personal-training.jpg",
+    alt: "One-to-one personal training at Garage 1880",
+    paragraphs: [
+      "One-to-one personal training is the primary service offered at Garage 1880. We recognize that everyone is different and work hard to provide the most individualized approach to wellness possible.",
+      "The experience and expertise our trainers provide, gives you access to the best and most effective personal training in Denver.",
+    ],
+  },
+  {
+    title: "Nutrition Coaching",
+    image: "/images/services/nutrition.jpg",
+    alt: "Nutrition coaching",
+    paragraphs: [
+      "Nutrition is a critical piece of any fitness journey. Our coaches help you build sustainable eating habits that complement your training goals.",
+      "No crash diets or extreme restrictions. We focus on practical, real-world nutrition strategies that fit your lifestyle and help you perform at your best.",
+    ],
+  },
+];
+
+const processSteps = [
+  "Just like working with any professional, being matched with the right personal trainer is key to having an enjoyable and successful training experience. We take great care in order to ensure we match you with the right personal trainer for you!",
+  "We start the matching process as soon as we receive your training inquiry by sending you a questionnaire that covers your goals, workout history, injuries and preferences.",
+  "Once you've completed our questionnaire we set up a movement assessment with the personal trainer we have selected, based on your answers. Our movement assessment screens for a variety of things including any muscle imbalances, mobility limitations and gives us insight on how to best program for you.",
+  "When your movement assessment is completed, the trainer you have worked with will talk to you in more detail about your expectations and goals. Based on the trainer's evaluation they will either confirm you have been matched correctly, or pair you with a personal trainer better suited for you.",
+];
+
 
 export const metadata: Metadata = {
-  title: "Personal Training | LoHi Fitness & Gym",
+  title: "Services | Personal Training & Nutrition Coaching",
   description:
-    "Personal training and nutrition coaching at Garage 1880 in Sunnyside, Denver. Holistic approach to fitness for lasting results.",
+    "Personal training and nutrition coaching at Garage 1880 in Sunnyside, Denver. Holistic coaching, trainer matching, and movement assessment for long-term results.",
 };
 
 export default function PersonalTrainingPage() {
   return (
-    <div className="pb-32">
-      <Navbar />
-
-      {/* Hero */}
-      <div className="bg-garage-black text-white py-32 relative overflow-hidden">
-        <div className="absolute inset-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
+    <SiteShell>
+      {/* Dark hero — left-aligned */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/images/services/personal-training.jpg"
             alt="Personal training at Garage 1880"
-            className="w-full h-full object-cover opacity-40"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-garage-black via-garage-black/80 to-transparent" />
+          <div className="absolute inset-0 bg-[rgb(var(--garage-hero-dark))]/70" />
         </div>
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <FadeInUp>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-              Personal Training in Denver
-            </h1>
-          </FadeInUp>
-          <FadeInUp delay={100}>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              We take a holistic approach to personal training at Garage 1880.
-            </p>
-          </FadeInUp>
-        </div>
-      </div>
 
-      {/* Intro */}
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-6">
-          <FadeInUp>
-            <h2 className="text-3xl font-bold text-garage-black mb-6">
-              Personal Trainers at Garage 1880
-            </h2>
-          </FadeInUp>
-          <FadeInUp delay={100}>
-            <div className="text-lg text-garage-gray leading-relaxed space-y-4">
-              <p>
-                Our personal trainers aim to help our clients gain confidence,
-                develop a positive relationship with exercise, and improve
-                mobility, strength, and endurance.
-              </p>
-              <p className="italic">
-                We want clients to feel good in their body and movements for
-                longevity and overall health.
-              </p>
+        <ContentContainer>
+          <div className="flex min-h-[66vh] items-center py-28 md:py-32">
+            <div className="max-w-2xl">
+              <Reveal>
+                <p className="type-subtitle text-white/50">Services</p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h1 className="type-h1 mt-4 text-white">Personal Training & Nutrition Coaching</h1>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/75">
+                  We take a holistic approach to personal training at Garage 1880.
+                </p>
+              </Reveal>
+              <Reveal delay={0.14} className="mt-9">
+                <ConsultTrigger size="lg" magnetic />
+              </Reveal>
             </div>
-          </FadeInUp>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-20 bg-garage-light">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Personal Training */}
-            <FadeInUp className="group bg-white p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-hover transition-all duration-300 border border-transparent hover:border-gray-200">
-              <div className="w-16 h-16 bg-garage-light rounded-2xl flex items-center justify-center text-garage-blue mb-6 group-hover:bg-garage-blue group-hover:text-white transition-colors">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 256 256"><path d="M248,120h-8V88a16,16,0,0,0-16-16H208V64a16,16,0,0,0-16-16H176a16,16,0,0,0-16,16v56H96V64A16,16,0,0,0,80,48H64A16,16,0,0,0,48,64v8H32A16,16,0,0,0,16,88v32H8a8,8,0,0,0,0,16h8v32a16,16,0,0,0,16,16H48v8a16,16,0,0,0,16,16H80a16,16,0,0,0,16-16V136h64v56a16,16,0,0,0,16,16h16a16,16,0,0,0,16-16v-8h16a16,16,0,0,0,16-16V136h8a8,8,0,0,0,0-16Z"/></svg>
-              </div>
-              <h3 className="text-2xl font-bold text-garage-black mb-4">
-                Personal Training
-              </h3>
-              <div className="text-garage-gray space-y-3">
-                <p>
-                  One-to-one personal training is the primary service offered at
-                  Garage 1880. We recognize that everyone is different and work
-                  hard to provide the most individualized approach to wellness
-                  possible.
-                </p>
-                <p>
-                  The experience and expertise our trainers provide gives you
-                  access to the best and most effective personal training in
-                  Denver.
-                </p>
-              </div>
-              <Link
-                href="/contact-us-about-fitness"
-                className="inline-flex items-center text-base font-bold text-garage-black group-hover:text-garage-blue transition-colors mt-6"
-              >
-                Get Started
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-              </Link>
-            </FadeInUp>
-
-            {/* Nutrition Coaching */}
-            <FadeInUp delay={150} className="group bg-white p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-hover transition-all duration-300 border border-transparent hover:border-gray-200">
-              <div className="w-16 h-16 bg-garage-light rounded-2xl flex items-center justify-center text-garage-warm mb-6 group-hover:bg-garage-warm group-hover:text-white transition-colors">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 256 256"><path d="M224,104a8,8,0,0,1-8,8H168a8,8,0,0,0-8,8v16.67a40,40,0,1,1-16,0V120a24,24,0,0,1,24-24h40V40a8,8,0,0,1,16,0v56h0A8,8,0,0,1,224,104ZM80,40a8,8,0,0,0-8,8V96H56V48a8,8,0,0,0-16,0V96H24V48a8,8,0,0,0-16,0v64a24,24,0,0,0,24,24h8v80a8,8,0,0,0,16,0V136h8a24,24,0,0,0,24-24V48A8,8,0,0,0,80,40Z"/></svg>
-              </div>
-              <h3 className="text-2xl font-bold text-garage-black mb-4">
-                Nutrition Coaching
-              </h3>
-              <div className="text-garage-gray space-y-3">
-                <p>
-                  Nutrition is a critical piece of any fitness journey. Our
-                  coaches help you build sustainable eating habits that
-                  complement your training goals.
-                </p>
-                <p>
-                  No crash diets or extreme restrictions. We focus on practical,
-                  real-world nutrition strategies that fit your lifestyle and
-                  help you perform at your best.
-                </p>
-              </div>
-              <Link
-                href="/contact-us-about-fitness"
-                className="inline-flex items-center text-base font-bold text-garage-black group-hover:text-garage-warm transition-colors mt-6"
-              >
-                Learn More
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-              </Link>
-            </FadeInUp>
           </div>
-        </div>
+        </ContentContainer>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-garage-black text-white text-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <FadeInUp>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
-              Ready to start?
-            </h2>
-            <p className="text-gray-300 mb-8 text-lg">
-              Take the first step toward a healthier, stronger you.
+      <section className="section-space-md bg-white">
+        <ContentContainer>
+          <div className="mx-auto max-w-4xl text-center">
+            <Reveal>
+              <h2 className="type-h2 text-garage-black">Personal Trainers at Garage 1880</h2>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <div className="mx-auto mt-6 max-w-3xl space-y-4 type-body text-garage-gray">
+                <p>We take a holistic approach to personal training at Garage 1880.</p>
+                <p>
+                  Our personal trainers aim to help our clients gain confidence, develop a positive relationship with
+                  exercise, and improve mobility, strength, and endurance.
+                </p>
+                <p className="italic">
+                  We want clients to feel good in their body and movements for longevity and overall health.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md">
+        <ContentContainer>
+          <div className="grid items-stretch gap-6 md:grid-cols-2">
+            {services.map((service, index) => (
+              <Reveal key={service.title} delay={index * 0.08} className="h-full">
+                <article className="group flex h-full flex-col overflow-hidden border border-garage-border bg-white">
+                  <div className="relative h-[480px]">
+                    <Image
+                      src={service.image}
+                      alt={service.alt}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                    />
+                  </div>
+                  <div className="flex h-full flex-col p-6">
+                    <h3 className="type-h3 text-garage-black">{service.title}</h3>
+                    <div className="mt-4 space-y-4 type-body text-garage-gray">
+                      {service.paragraphs.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md bg-white">
+        <ContentContainer>
+          <SectionHeading
+            eyebrow="How It Works"
+            title="Our Personal Training Process"
+            description="Being matched with the right personal trainer is key to an enjoyable and successful training experience."
+          />
+          <div className="relative mt-10">
+            {/* Timeline vertical line */}
+            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-garage-lilac/30 md:left-6" aria-hidden />
+
+            <div className="space-y-6">
+              {processSteps.map((step, index) => (
+                <Reveal key={step} delay={index * 0.06}>
+                  <div className="relative flex gap-5 md:gap-7">
+                    {/* Timeline circle */}
+                    <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-garage-lilac text-sm font-bold text-white shadow-[0_0_0_4px_rgb(var(--garage-canvas))] md:h-12 md:w-12 md:text-base" aria-hidden>
+                      {index + 1}
+                    </div>
+                    {/* Content card */}
+                    <article className="flex-1 border-l-4 border-garage-lilac/40 bg-white px-6 py-5 border border-garage-border md:px-7">
+                      <p className="type-body text-garage-ink">{step}</p>
+                    </article>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md">
+        <ContentContainer>
+          <SectionHeading
+            eyebrow="Team"
+            title="Meet Our Trainers"
+            description="All active trainers currently listed on Garage 1880."
+            align="left"
+          />
+          <div className="mt-10">
+            <TrainerGrid />
+          </div>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md bg-white">
+        <ContentContainer>
+          <Reveal>
+            <h2 className="type-h2 text-garage-black">Set Up a Movement Assessment!</h2>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <p className="mt-4 max-w-3xl type-body text-garage-gray">
+              Start with a quick form and our team will match you with the right trainer for your goals.
             </p>
-            <Link
-              href="/contact-us-about-fitness"
-              className="inline-block px-8 py-4 bg-garage-blue text-white text-lg font-bold rounded-full hover:bg-white hover:text-garage-blue transition-all shadow-glow hover:shadow-xl"
-            >
-              Book Your Session
-            </Link>
-          </FadeInUp>
-        </div>
+          </Reveal>
+          <Reveal delay={0.12} className="mt-8">
+            <MovementAssessmentForm />
+          </Reveal>
+        </ContentContainer>
       </section>
-
-      <Footer />
-    </div>
+    </SiteShell>
   );
 }
