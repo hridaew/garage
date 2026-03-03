@@ -1,8 +1,10 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/wix-blog";
 import RichContent from "@/components/blog/RichContent";
+import Reveal from "@/components/motion/Reveal";
+import ContentContainer from "@/components/layout/ContentContainer";
 
 export const revalidate = 3600;
 
@@ -33,77 +35,56 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound();
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-garage-black text-white py-16">
-        <div className="max-w-3xl mx-auto px-6">
+    <section className="section-space-md pt-28 md:pt-34">
+      <ContentContainer>
+        <article className="mx-auto max-w-3xl">
+        <Reveal preset="fade">
           <Link
             href="/fitnessblog"
-            className="text-garage-gray hover:text-white transition-colors text-sm mb-6 inline-flex items-center gap-1"
+            className="inline-flex items-center gap-2 text-sm font-medium text-garage-gray transition-colors hover:text-garage-black"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+            <span aria-hidden>&larr;</span>
             Back to Blog
           </Link>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+        </Reveal>
+
+        <Reveal className="mt-5">
+          <h1 className="editorial-display text-4xl text-garage-black md:text-5xl">
             {post.title}
           </h1>
-          <div className="flex items-center gap-3 text-garage-gray text-sm">
-            <time>{formatDate(post.firstPublishedDate)}</time>
-            {post.minutesToRead && (
-              <>
-                <span>&middot;</span>
-                <span>{post.minutesToRead} min read</span>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
+        </Reveal>
 
-      {/* Content */}
-      <article className="max-w-3xl mx-auto px-6 py-12">
-        {post.richContent ? (
-          <RichContent content={post.richContent} />
-        ) : post.excerpt ? (
-          <p className="text-garage-black/80 leading-relaxed">{post.excerpt}</p>
-        ) : (
-          <p className="text-garage-gray">No content available.</p>
-        )}
-      </article>
+        <Reveal delay={0.06} className="mt-4 flex items-center gap-3 text-sm text-garage-gray">
+          <time>{formatDate(post.firstPublishedDate)}</time>
+          {post.minutesToRead ? (
+            <>
+              <span>&middot;</span>
+              <span>{post.minutesToRead} min read</span>
+            </>
+          ) : null}
+        </Reveal>
 
-      {/* Back link */}
-      <div className="max-w-3xl mx-auto px-6 pb-16">
-        <Link
-          href="/fitnessblog"
-          className="text-garage-blue hover:underline inline-flex items-center gap-1"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
+        <Reveal delay={0.1} className="mt-10 border border-garage-border bg-white px-6 py-8 md:px-8 md:py-10">
+          {post.richContent ? (
+            <RichContent content={post.richContent} />
+          ) : post.excerpt ? (
+            <p className="leading-relaxed text-garage-ink">{post.excerpt}</p>
+          ) : (
+            <p className="text-garage-gray">No content available.</p>
+          )}
+        </Reveal>
+
+        <Reveal delay={0.12} className="mt-8">
+          <Link
+            href="/fitnessblog"
+            className="inline-flex items-center gap-2 text-garage-blue hover:underline"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          All Posts
-        </Link>
-      </div>
-    </main>
+            <span aria-hidden>&larr;</span>
+            All Posts
+          </Link>
+        </Reveal>
+        </article>
+      </ContentContainer>
+    </section>
   );
 }

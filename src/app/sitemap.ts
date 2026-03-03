@@ -16,12 +16,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const response = await getAllPosts(100);
     const posts = response.posts || [];
-    blogPages = posts.map((post) => ({
-      url: `${BASE_URL}/fitnessblog/${post.slug}`,
-      lastModified: post.lastPublishedDate ? new Date(post.lastPublishedDate) : new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }));
+    blogPages = posts
+      .filter((post) => Boolean(post.slug))
+      .map((post) => ({
+        url: `${BASE_URL}/fitnessblog/${post.slug}`,
+        lastModified: post.lastPublishedDate
+          ? new Date(post.lastPublishedDate)
+          : new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }));
   } catch {
     // Sitemap will just have static pages if blog API fails
   }
