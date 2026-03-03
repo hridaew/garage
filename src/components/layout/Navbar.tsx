@@ -71,7 +71,7 @@ export default function Navbar() {
     <>
       <nav
         ref={dockRef}
-        className="fixed bottom-6 left-1/2 z-50 w-full -translate-x-1/2"
+        className="fixed bottom-6 inset-x-0 z-50"
         aria-label="Primary"
       >
         <ContentContainer>
@@ -124,12 +124,21 @@ export default function Navbar() {
       <div
         id="mobile-nav"
         aria-hidden={!mobileOpen}
-        className={`fixed inset-0 z-40 bg-white px-8 pb-16 pt-24 transition-all duration-300 md:hidden ${mobileOpen
+        className={`fixed inset-0 z-[60] bg-white px-8 pt-12 transition-all duration-300 md:hidden ${mobileOpen
           ? "pointer-events-auto translate-y-0 opacity-100"
           : "pointer-events-none translate-y-8 opacity-0"
           }`}
       >
-        <div className="mx-auto flex h-full max-w-sm flex-col">
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen(false)}
+          aria-label="Close menu"
+          className="absolute right-6 top-6 inline-flex h-11 w-11 items-center justify-center rounded-[0.7rem] border border-garage-border bg-white text-garage-black transition-colors hover:bg-garage-light active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-garage-lilac"
+        >
+          <X size={18} weight="bold" />
+        </button>
+        <div className="mx-auto flex h-full max-w-sm flex-col pb-32">
           <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-garage-gray">
             Navigate
           </p>
