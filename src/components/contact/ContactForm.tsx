@@ -1,95 +1,85 @@
 "use client";
 
-import { useState } from "react";
-import { CaretDown, CheckCircle, PaperPlaneTilt } from "@phosphor-icons/react";
+import { CaretDown, PaperPlaneTilt } from "@phosphor-icons/react";
 import PremiumButton from "@/components/ui/PremiumButton";
 
 export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-    setSubmitted(true);
-  }
-
-  if (submitted) {
-    return (
-      <div className="surface-card p-10 text-center md:p-12">
-        <CheckCircle size={62} weight="fill" className="mx-auto mb-6 text-green-500" />
-        <h3 className="font-display text-3xl text-garage-black">Request Sent!</h3>
-        <p className="mt-3 text-sm text-garage-gray md:text-base">
-          We&apos;ll get back to you within 24 hours.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="surface-card p-7 md:p-9">
+    <form
+      action="https://formsubmit.co/info@garage1880.com"
+      method="POST"
+      className="surface-card p-7 md:p-9"
+    >
       <h2 className="font-display text-3xl text-garage-black">Start Your Journey</h2>
       <p className="mt-2 text-sm text-garage-gray">Tell us about your goals.</p>
 
+      {/* FormSubmit configurations */}
+      <input type="hidden" name="_subject" value="New Lead from Garage 1880 Website!" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="box" />
+
       <div className="mt-7 space-y-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <label className="space-y-1.5 text-sm text-garage-ink">
+          <label htmlFor="contact-firstName" className="space-y-1.5 text-sm text-garage-ink">
             <span className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
               First Name
             </span>
             <input
+              id="contact-firstName"
               type="text"
               name="firstName"
-              className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac"
+              className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
               required
             />
           </label>
-          <label className="space-y-1.5 text-sm text-garage-ink">
+          <label htmlFor="contact-lastName" className="space-y-1.5 text-sm text-garage-ink">
             <span className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
               Last Name
             </span>
             <input
+              id="contact-lastName"
               type="text"
               name="lastName"
-              className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac"
+              className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
               required
             />
           </label>
         </div>
 
-        <label className="space-y-1.5 text-sm text-garage-ink">
+        <label htmlFor="contact-email" className="space-y-1.5 text-sm text-garage-ink">
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
             Email
           </span>
           <input
+            id="contact-email"
             type="email"
             name="email"
-            className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac"
+            className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
             required
           />
         </label>
 
-        <label className="space-y-1.5 text-sm text-garage-ink">
+        <label htmlFor="contact-phone" className="space-y-1.5 text-sm text-garage-ink">
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
             Phone (optional)
           </span>
           <input
+            id="contact-phone"
             type="tel"
             name="phone"
-            className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac"
+            className="w-full rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
           />
         </label>
 
-        <label className="space-y-1.5 text-sm text-garage-ink">
-          <span className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
+        <div className="space-y-1.5 text-sm text-garage-ink">
+          <label htmlFor="contact-interest" className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
             Interest
-          </span>
+          </label>
           <div className="relative">
             <select
+              id="contact-interest"
               name="interest"
-              className="w-full appearance-none rounded-2xl border border-garage-border bg-white px-4 py-3 pr-10 outline-none transition-colors focus:border-garage-lilac"
+              className="w-full appearance-none rounded-2xl border border-garage-border bg-white px-4 py-3 pr-10 outline-none transition-colors focus:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
             >
               <option>Personal Training</option>
               <option>Nutrition Coaching</option>
@@ -100,16 +90,17 @@ export default function ContactForm() {
               weight="bold"
             />
           </div>
-        </label>
+        </div>
 
-        <label className="space-y-1.5 text-sm text-garage-ink">
+        <label htmlFor="contact-message" className="space-y-1.5 text-sm text-garage-ink">
           <span className="text-xs font-semibold uppercase tracking-[0.14em] text-garage-gray">
             Message
           </span>
           <textarea
+            id="contact-message"
             name="message"
             rows={4}
-            className="w-full resize-none rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac"
+            className="w-full resize-none rounded-2xl border border-garage-border bg-white px-4 py-3 outline-none transition-colors focus:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
             placeholder="Tell us about your goals..."
           />
         </label>
@@ -118,10 +109,9 @@ export default function ContactForm() {
           type="submit"
           size="lg"
           className="w-full"
-          disabled={loading}
           icon={<PaperPlaneTilt weight="bold" size={18} />}
         >
-          {loading ? "Sending..." : "Send Request"}
+          Send Request
         </PremiumButton>
       </div>
     </form>

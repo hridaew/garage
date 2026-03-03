@@ -4,10 +4,10 @@ import {
   FacebookLogo,
   InstagramLogo,
   MapPin,
-  Phone,
 } from "@phosphor-icons/react/dist/ssr";
 import SiteShell from "@/components/layout/SiteShell";
 import Reveal from "@/components/motion/Reveal";
+import EmailCopyToast from "@/components/ui/EmailCopyToast";
 import ContactForm from "@/components/contact/ContactForm";
 import ContentContainer from "@/components/layout/ContentContainer";
 
@@ -55,15 +55,10 @@ export default function ContactPage() {
             <div className="space-y-8 border border-garage-border bg-white p-8">
               <div>
                 <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-garage-black">
-                  <Phone weight="fill" className="text-garage-black" />
-                  Call Us
+                  <span className="text-garage-black">@</span>
+                  Email Us
                 </h3>
-                <a
-                  href="tel:7207456158"
-                  className="text-lg text-garage-gray transition-colors hover:text-garage-blue"
-                >
-                  (720) 745-6158
-                </a>
+                <EmailCopyToast />
               </div>
 
               <div>

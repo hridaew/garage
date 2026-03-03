@@ -166,7 +166,7 @@ export default function ConsultPopover({
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Book your free consult"
+        aria-labelledby="consult-dialog-title"
         className="relative z-10 w-full max-w-[42rem] rounded-[1.45rem] border border-garage-border bg-white p-6 shadow-[0_28px_60px_rgba(14,16,32,0.24)] md:p-8"
         style={{
           opacity: visible ? 1 : 0,
@@ -175,8 +175,8 @@ export default function ConsultPopover({
         }}
       >
         <div className="mb-4 grid grid-cols-[2.75rem_1fr_2.75rem] items-center gap-2">
-          <span aria-hidden className="h-11 w-11" />
-          <h3 className="type-h2 text-center text-garage-black">Book your free consult</h3>
+          <span aria-hidden="true" className="h-11 w-11" />
+          <h3 id="consult-dialog-title" className="type-h2 text-center text-garage-black">Book your free consult</h3>
           <button
             type="button"
             onClick={closeAndReturnFocus}

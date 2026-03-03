@@ -124,7 +124,7 @@ export default function TrainerModal({ trainer, onClose }: TrainerModalProps) {
   if (!trainer || !mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center px-4 py-8" role="dialog" aria-modal="true" aria-label={`${trainer.name} profile`}>
+    <div className="fixed inset-0 z-[110] flex items-center justify-center px-4 py-8" role="dialog" aria-modal="true" aria-labelledby="trainer-dialog-title">
       <button
         ref={backdropRef}
         type="button"
@@ -151,7 +151,7 @@ export default function TrainerModal({ trainer, onClose }: TrainerModalProps) {
             <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" />
           </div>
           <div>
-            <h3 ref={nameRef} className="type-h2 text-garage-black">{trainer.name}</h3>
+            <h3 ref={nameRef} id="trainer-dialog-title" className="type-h2 text-garage-black">{trainer.name}</h3>
             <p ref={roleRef} className="mt-2 type-label text-garage-blue">{trainer.role}</p>
           </div>
         </div>

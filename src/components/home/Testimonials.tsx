@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "@phosphor-icons/react";
-import ContentContainer from "@/components/layout/ContentContainer";
 
 const testimonials = [
   {
@@ -28,7 +27,7 @@ const testimonials = [
 
 function Stars() {
   return (
-    <div className="mb-4 flex text-garage-blue" aria-hidden>
+    <div className="mb-4 flex text-garage-blue" aria-hidden="true">
       {[...Array(5)].map((_, i) => (
         <Star key={i} weight="fill" size={16} />
       ))}
@@ -36,169 +35,89 @@ function Stars() {
   );
 }
 
+interface CardProps {
+  testimonial: (typeof testimonials)[number];
+  duplicate?: boolean;
+}
+
+function TestimonialCard({ testimonial, duplicate = false }: CardProps) {
+  return (
+    <article
+      aria-label={testimonial.name}
+      aria-hidden={duplicate ? "true" : undefined}
+      className="w-[90vw] max-w-[850px] shrink-0 flex flex-col border border-garage-border bg-white md:flex-row md:w-[780px]"
+    >
+      {/* Photo */}
+      <div className="relative w-full bg-garage-panel md:w-[40%] md:shrink-0">
+        {testimonial.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={testimonial.image}
+            alt={testimonial.name}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : null}
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-grow p-7 md:p-9 md:w-[60%] justify-center">
+        <Stars />
+        <p className="text-lg leading-relaxed text-garage-ink md:text-xl">
+          &ldquo;{testimonial.text}&rdquo;
+        </p>
+        <div className="mt-8">
+          <div className="border-t border-garage-border/70 pt-5">
+            <p className="text-base font-semibold text-garage-black">{testimonial.name}</p>
+            <p className="text-sm text-garage-gray">{testimonial.role}</p>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function Testimonials() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const draggingRef = useRef(false);
-  const dragStartRef = useRef({ x: 0, scrollLeft: 0 });
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const motionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncReducedMotion = () => setReducedMotion(motionMedia.matches);
-    syncReducedMotion();
-    motionMedia.addEventListener("change", syncReducedMotion);
-
-    const track = trackRef.current;
-    if (!track) return;
-
-    let ticking = false;
-
-    const updateActive = () => {
-      const cards = Array.from(track.querySelectorAll<HTMLElement>("[data-card]"));
-      if (cards.length === 0) return;
-
-      const center = track.scrollLeft + track.clientWidth / 2;
-      let closest = 0;
-      let minDistance = Number.POSITIVE_INFINITY;
-
-      cards.forEach((card, index) => {
-        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-        const distance = Math.abs(cardCenter - center);
-        if (distance < minDistance) {
-          closest = index;
-          minDistance = distance;
-        }
-      });
-
-      setActiveIndex(closest);
-    };
-
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        updateActive();
-        ticking = false;
-      });
-    };
-
-    track.addEventListener("scroll", onScroll, { passive: true });
-    updateActive();
-
-    return () => {
-      motionMedia.removeEventListener("change", syncReducedMotion);
-      track.removeEventListener("scroll", onScroll);
-    };
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
-  const scrollToIndex = (index: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const cards = Array.from(track.querySelectorAll<HTMLElement>("[data-card]"));
-    const target = cards[index];
-    if (!target) return;
-
-    target.scrollIntoView({
-      behavior: reducedMotion ? "auto" : "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  };
-
-  const handlePrev = () => {
-    const next = Math.max(activeIndex - 1, 0);
-    scrollToIndex(next);
-  };
-
-  const handleNext = () => {
-    const next = Math.min(activeIndex + 1, testimonials.length - 1);
-    scrollToIndex(next);
-  };
-
   return (
-    <div className="relative">
-      <ContentContainer className="px-0">
-        <div
-          ref={trackRef}
-          className="hide-scroll flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4"
-          onKeyDown={(event) => {
-            if (event.key === "ArrowLeft") {
-              event.preventDefault();
-              handlePrev();
-            }
-            if (event.key === "ArrowRight") {
-              event.preventDefault();
-              handleNext();
-            }
-          }}
-          tabIndex={0}
-          onPointerDown={(event) => {
-            draggingRef.current = true;
-            dragStartRef.current = {
-              x: event.clientX,
-              scrollLeft: trackRef.current?.scrollLeft || 0,
-            };
-          }}
-          onPointerMove={(event) => {
-            if (!draggingRef.current || !trackRef.current) return;
-            const delta = event.clientX - dragStartRef.current.x;
-            trackRef.current.scrollLeft = dragStartRef.current.scrollLeft - delta;
-          }}
-          onPointerUp={() => {
-            draggingRef.current = false;
-          }}
-          onPointerCancel={() => {
-            draggingRef.current = false;
-          }}
-          onPointerLeave={() => {
-            draggingRef.current = false;
-          }}
-        >
-          {testimonials.map((testimonial, index) => {
-            const active = activeIndex === index;
-            return (
-              <article
-                key={testimonial.name}
-                data-card
-                className={`w-[90vw] max-w-[700px] snap-center rounded-none border border-garage-border bg-white transition-all duration-300 md:w-[620px] ${
-                  reducedMotion
-                    ? ""
-                    : active
-                      ? "scale-100"
-                      : "scale-[0.97]"
-                }`}
-                aria-current={active ? "true" : undefined}
-              >
-                {/* Header image */}
-                <div className="relative w-full overflow-hidden bg-garage-panel">
-                  {testimonial.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-full object-contain"
-                      loading="lazy"
-                    />
-                  ) : null}
-                </div>
+    <div role="region" aria-label="Testimonials" className="relative overflow-hidden">
+      {/* Left fade */}
+      <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-24 bg-gradient-to-r from-[rgb(var(--garage-canvas))] to-transparent md:w-52" />
+      {/* Right fade */}
+      <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-24 bg-gradient-to-l from-[rgb(var(--garage-canvas))] to-transparent md:w-52" />
 
-                <div className="p-7 md:p-9">
-                  <Stars />
-                  <p className="text-lg leading-relaxed text-garage-ink">
-                    &ldquo;{testimonial.text}&rdquo;
-                  </p>
-                  <div className="mt-7 border-t border-garage-border/70 pt-5">
-                    <p className="text-base font-semibold text-garage-black">{testimonial.name}</p>
-                    <p className="text-sm text-garage-gray">{testimonial.role}</p>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </ContentContainer>
+      {/* Marquee track */}
+      <div
+        className="flex gap-6 py-6"
+        style={
+          reducedMotion
+            ? { flexWrap: "wrap" }
+            : {
+              width: "max-content",
+              animation: "testimonials-scroll 48s linear infinite",
+            }
+        }
+      >
+        {/* Primary set — visible to screen readers */}
+        {testimonials.map((t) => (
+          <TestimonialCard key={t.name} testimonial={t} />
+        ))}
 
+        {/* Duplicate set for seamless loop — hidden from AT */}
+        {!reducedMotion &&
+          testimonials.map((t) => (
+            <TestimonialCard key={`dup-${t.name}`} testimonial={t} duplicate />
+          ))}
+      </div>
     </div>
   );
 }

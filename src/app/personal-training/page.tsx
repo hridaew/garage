@@ -16,6 +16,7 @@ const services = [
     paragraphs: [
       "One-to-one personal training is the primary service offered at Garage 1880. We recognize that everyone is different and work hard to provide the most individualized approach to wellness possible.",
       "The experience and expertise our trainers provide, gives you access to the best and most effective personal training in Denver.",
+      "Full Programming: Workouts are provided for clients to do on their own even when they are traveling.",
     ],
   },
   {

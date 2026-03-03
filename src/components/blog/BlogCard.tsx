@@ -5,6 +5,7 @@ interface BlogCardProps {
   excerpt: string;
   slug: string;
   date: string;
+  dateTime?: string;
   minutesToRead?: number;
   coverImageUrl?: string;
 }
@@ -14,6 +15,7 @@ export default function BlogCard({
   excerpt,
   slug,
   date,
+  dateTime,
   minutesToRead,
   coverImageUrl,
 }: BlogCardProps) {
@@ -34,10 +36,10 @@ export default function BlogCard({
 
         <div className="p-6">
           <div className="mb-3 flex items-center gap-2 text-xs text-garage-gray">
-            <time>{date}</time>
+            <time dateTime={dateTime}>{date}</time>
             {minutesToRead ? (
               <>
-                <span>&middot;</span>
+                <span aria-hidden="true">&middot;</span>
                 <span>{minutesToRead} min read</span>
               </>
             ) : null}

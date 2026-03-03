@@ -47,18 +47,10 @@ export default function Navbar() {
         { y: 0, opacity: 1, duration: 0.52, ease: "power2.out" }
       );
 
+      // Disable ScrollTrigger hiding so navbar stays permanently pinned and glassy
       const trigger = ScrollTrigger.create({
         start: 40,
         end: "max",
-        onUpdate: (self) => {
-          if (!dockRef.current) return;
-          gsap.to(dockRef.current, {
-            y: self.direction === 1 ? 7 : 0,
-            duration: 0.2,
-            ease: "power2.out",
-            overwrite: true,
-          });
-        },
       });
 
       cleanup = () => {
@@ -118,6 +110,7 @@ export default function Navbar() {
                   className="inline-flex h-11 w-11 items-center justify-center rounded-[0.7rem] border border-garage-border bg-white text-garage-black transition-colors hover:bg-garage-light active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-garage-lilac md:hidden"
                   onClick={() => setMobileOpen((prev) => !prev)}
                   aria-expanded={mobileOpen}
+                  aria-controls="mobile-nav"
                   aria-label="Toggle mobile menu"
                 >
                   {mobileOpen ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
@@ -129,11 +122,12 @@ export default function Navbar() {
       </nav>
 
       <div
-        className={`fixed inset-0 z-40 bg-white px-8 pb-16 pt-24 transition-all duration-300 md:hidden ${
-          mobileOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-8 opacity-0"
-        }`}
+        id="mobile-nav"
+        aria-hidden={!mobileOpen}
+        className={`fixed inset-0 z-40 bg-white px-8 pb-16 pt-24 transition-all duration-300 md:hidden ${mobileOpen
+          ? "pointer-events-auto translate-y-0 opacity-100"
+          : "pointer-events-none translate-y-8 opacity-0"
+          }`}
       >
         <div className="mx-auto flex h-full max-w-sm flex-col">
           <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-garage-gray">

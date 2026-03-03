@@ -10,12 +10,12 @@ import InstagramFeed from "@/components/home/InstagramFeed";
 
 const gallery = [
   {
-    src: "/images/gallery/gym-floor.jpg",
+    src: "/images/mainfloor.png",
     label: "The Main Floor",
     alt: "Garage 1880 gym floor",
   },
   {
-    src: "/images/gallery/equipment.jpg",
+    src: "/images/equipment.png",
     label: "Equipment",
     alt: "Training equipment at Garage 1880",
   },
@@ -23,14 +23,13 @@ const gallery = [
     src: "/images/gallery/community.jpg",
     label: "Community",
     alt: "Garage 1880 community",
-    rotation: "-90deg" as const,
   },
 ];
 
 const services = [
   {
     title: "Personal Training",
-    image: "/images/services/personal-training.jpg",
+    image: "/images/personaltraining.jpeg",
     alt: "One to one personal training",
     paragraphs: [
       "One-to-one personal training is the primary service offered at Garage 1880. We recognize that everyone is different and work hard to provide the most individualized approach to wellness possible.",
@@ -72,7 +71,7 @@ export default function Home() {
               <article className="overflow-hidden border border-garage-border bg-white">
                 <div className="relative h-[360px]">
                   <Image
-                    src="/images/philosophy/training-1.jpg"
+                    src="/images/trainer1.png"
                     alt="Training with weights"
                     fill
                     className="object-cover"
@@ -85,7 +84,7 @@ export default function Home() {
               <article className="overflow-hidden border border-garage-border bg-white">
                 <div className="relative h-[360px]">
                   <Image
-                    src="/images/philosophy/training-2.jpg"
+                    src="/images/trainer2.png"
                     alt="Garage 1880 training"
                     fill
                     className="object-cover"
@@ -97,7 +96,7 @@ export default function Home() {
             <Reveal delay={0.1} className="sm:col-span-2">
               <div className="border border-garage-border bg-garage-light px-6 py-7 text-garage-gray md:px-8">
                 <p className="type-body">
-                  What you will find is a team that meets you where you are. Change takes time. We&apos;re here to create habits and results for life.
+                  What you will find is a team that meets you where you are, no matter where you are. We&apos;ll design your workouts for when you&apos;re at home or traveling too. Change takes time. We&apos;re here to create habits and results for life.
                 </p>
               </div>
             </Reveal>
@@ -173,7 +172,7 @@ export default function Home() {
             {services.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.07} className="h-full">
                 <article className="group flex h-full flex-col overflow-hidden border border-garage-border bg-white">
-                  <div className="relative h-[480px]">
+                  <div className="relative w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] max-h-[500px]">
                     <Image
                       src={service.image}
                       alt={service.alt}
@@ -182,7 +181,7 @@ export default function Home() {
                       sizes="(min-width: 1024px) 50vw, 100vw"
                     />
                   </div>
-                  <div className="flex h-full flex-col p-6">
+                  <div className="flex h-full flex-col p-6 lg:p-8">
                     <h3 className="type-h3 text-garage-black">{service.title}</h3>
                     <div className="mt-4 grow space-y-3 type-body text-garage-gray">
                       {service.paragraphs.map((paragraph) => (

@@ -5,9 +5,8 @@ import Image from "next/image";
 import { gsap } from "gsap";
 
 const images = [
-  { src: "/images/hero/hero-1.jpg", alt: "Training at Garage 1880" },
-  { src: "/images/hero/hero-2.jpg", alt: "Personal training session" },
-  { src: "/images/hero/hero-3.jpg", alt: "Garage 1880 trainer" },
+  { src: "/images/slideimage1.png", alt: "Training at Garage 1880" },
+  { src: "/images/slideimage2.png", alt: "Personal training session" },
 ];
 
 export default function ImageStack() {
@@ -204,25 +203,6 @@ export default function ImageStack() {
         </div>
       ))}
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-2">
-        {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveIndex(i);
-            }}
-            className={`h-2 w-2 rounded-full transition-all duration-300 ${
-              activeIndex === i
-                ? "bg-white scale-125"
-                : "bg-white/40 hover:bg-white/60"
-            }`}
-            aria-label={`Show image ${i + 1}`}
-          />
-        ))}
-      </div>
     </div>
   );
 }

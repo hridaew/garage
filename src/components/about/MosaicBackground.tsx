@@ -73,7 +73,7 @@ export default function MosaicBackground() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="absolute inset-0 grid grid-cols-3 grid-rows-3 gap-1 md:grid-cols-4 md:grid-rows-2"
+      className="absolute inset-0 grid grid-cols-3 grid-rows-3 md:grid-cols-4 md:grid-rows-2"
       aria-hidden
     >
       {Array.from({ length: TILE_COUNT }, (_, n) => (

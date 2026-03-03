@@ -59,7 +59,7 @@ export default function HomeHero() {
   }, []);
 
   return (
-    <header ref={rootRef} className="relative isolate min-h-[95vh] overflow-hidden">
+    <header ref={rootRef} aria-label="Hero" className="relative isolate min-h-[95vh] overflow-hidden">
       {/* Video background */}
       <div ref={mediaRef} className="absolute inset-0 -z-20 will-change-transform">
         <video
@@ -70,7 +70,7 @@ export default function HomeHero() {
           className="h-full w-full min-h-full min-w-full object-cover"
           poster="/videos/hero-poster.jpg"
         >
-          <source src="/videos/hero.mov" type="video/mp4" />
+          <source src="/videos/HeroMovieEdited.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[rgb(var(--garage-hero-dark))]/75" />
       </div>
@@ -113,7 +113,7 @@ export default function HomeHero() {
             {/* Mobile fallback image */}
             <div className="relative h-[340px] overflow-hidden border border-white/15 lg:hidden">
               <Image
-                src="/images/hero/hero-2.jpg"
+                src="/images/slideimage1.png"
                 alt="Personal training at Garage 1880"
                 fill
                 className="object-cover"
