@@ -45,10 +45,33 @@ function TestimonialCard({ testimonial, duplicate = false }: CardProps) {
     <article
       aria-label={testimonial.name}
       aria-hidden={duplicate ? "true" : undefined}
-      className="w-[90vw] max-w-[850px] shrink-0 flex flex-col border border-garage-border bg-white md:flex-row md:w-[780px]"
+      className="w-[82vw] max-w-[340px] shrink-0 border border-garage-border bg-white md:w-[780px] md:max-w-[850px] md:flex"
     >
-      {/* Photo */}
-      <div className="relative w-full bg-garage-panel md:w-[40%] md:shrink-0">
+      {/* Mobile: compact stacked-horizontal layout */}
+      <div className="flex items-center gap-4 p-5 md:hidden">
+        <div className="h-16 w-16 shrink-0 overflow-hidden bg-garage-panel">
+          {testimonial.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={testimonial.image}
+              alt={testimonial.name}
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          ) : null}
+        </div>
+        <div className="min-w-0 flex-1">
+          <Stars />
+          <p className="text-sm leading-snug text-garage-ink line-clamp-3">
+            &ldquo;{testimonial.text}&rdquo;
+          </p>
+          <p className="mt-2 text-xs font-semibold text-garage-black">{testimonial.name}</p>
+          <p className="text-xs text-garage-gray">{testimonial.role}</p>
+        </div>
+      </div>
+
+      {/* Desktop: full side-by-side layout */}
+      <div className="relative hidden bg-garage-panel md:block md:w-[40%] md:shrink-0">
         {testimonial.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -59,11 +82,9 @@ function TestimonialCard({ testimonial, duplicate = false }: CardProps) {
           />
         ) : null}
       </div>
-
-      {/* Content */}
-      <div className="flex flex-col flex-grow p-7 md:p-9 md:w-[60%] justify-center">
+      <div className="hidden md:flex md:w-[60%] md:flex-col md:flex-grow md:justify-center md:p-9">
         <Stars />
-        <p className="text-lg leading-relaxed text-garage-ink md:text-xl">
+        <p className="text-xl leading-relaxed text-garage-ink">
           &ldquo;{testimonial.text}&rdquo;
         </p>
         <div className="mt-8">

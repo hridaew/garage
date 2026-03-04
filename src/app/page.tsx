@@ -66,33 +66,58 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <Reveal className="sm:translate-y-8">
-              <article className="overflow-hidden border border-garage-border bg-white">
-                <div className="relative h-[360px]">
-                  <Image
-                    src="/images/trainer1.png"
-                    alt="Training with weights"
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                  />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {/* Image 1 + text card 1 — column A */}
+            <div className="flex flex-col gap-6">
+              <Reveal className="sm:translate-y-8">
+                <article className="overflow-hidden border border-garage-border bg-white">
+                  <div className="relative h-[260px] sm:h-[360px]">
+                    <Image
+                      src="/images/trainer1.png"
+                      alt="Training with weights"
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                </article>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <div className="border border-garage-border bg-white px-6 py-6">
+                  <h3 className="type-h3 text-garage-black">Real Focus</h3>
+                  <p className="mt-2 type-body text-garage-gray">
+                    Private sessions where the attention is 100% on your form.
+                  </p>
                 </div>
-              </article>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <article className="overflow-hidden border border-garage-border bg-white">
-                <div className="relative h-[360px]">
-                  <Image
-                    src="/images/trainer2.png"
-                    alt="Garage 1880 training"
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 640px) 50vw, 100vw"
-                  />
+              </Reveal>
+            </div>
+
+            {/* Image 2 + text card 2 — column B */}
+            <div className="flex flex-col gap-6">
+              <Reveal delay={0.08}>
+                <article className="overflow-hidden border border-garage-border bg-white">
+                  <div className="relative h-[260px] sm:h-[360px]">
+                    <Image
+                      src="/images/trainer2.png"
+                      alt="Garage 1880 training"
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                </article>
+              </Reveal>
+              <Reveal delay={0.14}>
+                <div className="border border-garage-border bg-white px-6 py-6">
+                  <h3 className="type-h3 text-garage-black">Sustainable</h3>
+                  <p className="mt-2 type-body text-garage-gray">
+                    Plans built around your life, not the other way around.
+                  </p>
                 </div>
-              </article>
-            </Reveal>
+              </Reveal>
+            </div>
+
+            {/* Full-width quote — spans both columns */}
             <Reveal delay={0.1} className="sm:col-span-2">
               <div className="border border-garage-border bg-garage-light px-6 py-7 text-garage-gray md:px-8">
                 <p className="type-body">
@@ -100,23 +125,8 @@ export default function Home() {
                 </p>
               </div>
             </Reveal>
-            <Reveal delay={0.12}>
-              <div className="border border-garage-border bg-white px-6 py-6">
-                <h3 className="type-h3 text-garage-black">Real Focus</h3>
-                <p className="mt-2 type-body text-garage-gray">
-                  Private sessions where the attention is 100% on your form.
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.14}>
-              <div className="border border-garage-border bg-white px-6 py-6">
-                <h3 className="type-h3 text-garage-black">Sustainable</h3>
-                <p className="mt-2 type-body text-garage-gray">
-                  Plans built around your life, not the other way around.
-                </p>
-              </div>
-            </Reveal>
           </div>
+
         </ContentContainer>
       </section>
 
