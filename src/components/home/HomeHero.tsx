@@ -110,17 +110,6 @@ export default function HomeHero() {
             {/* Right — stacked images (desktop) */}
             <ImageStack />
 
-            {/* Mobile fallback image */}
-            <div className="relative h-[340px] overflow-hidden border border-white/15 lg:hidden">
-              <Image
-                src="/images/slideimage1.png"
-                alt="Personal training at Garage 1880"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 0px"
-                priority
-              />
-            </div>
           </div>
         </div>
       </ContentContainer>

@@ -10,7 +10,7 @@ export default function TrainerGrid() {
 
   return (
     <>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 overflow-x-hidden">
         {trainers.map((trainer) => (
           <TrainerCard key={trainer.id} trainer={trainer} onOpen={setActiveTrainer} />
         ))}

@@ -22,7 +22,7 @@ export default function EmailCopyToast() {
             <button
                 type="button"
                 onClick={handleCopy}
-                className="group flex items-center gap-2 text-lg text-garage-gray transition-colors hover:text-garage-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
+                className="group flex items-center gap-2 text-sm text-garage-gray transition-colors hover:text-garage-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-garage-lilac focus-visible:ring-offset-2"
                 aria-label="Copy email address"
             >
                 <span>{email}</span>

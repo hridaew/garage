@@ -15,7 +15,7 @@ const gallery = [
     alt: "Garage 1880 gym floor",
   },
   {
-    src: "/images/equipment.png",
+    src: "/images/equipment.jpg",
     label: "Equipment",
     alt: "Training equipment at Garage 1880",
   },

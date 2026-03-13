@@ -107,12 +107,8 @@ export default function Footer() {
         </div>
 
         <Reveal delay={0.2}>
-          <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-garage-border pt-8 text-xs font-medium text-garage-gray md:flex-row md:items-center">
+          <div className="mt-14 flex items-center justify-between border-t border-garage-border pt-8 text-xs font-medium text-garage-gray">
             <p>&copy;{new Date().getFullYear()} Garage 1880</p>
-            <div className="flex space-x-6">
-              <span className="text-garage-gray/50">Privacy</span>
-              <span className="text-garage-gray/50">Terms</span>
-            </div>
           </div>
         </Reveal>
       </ContentContainer>

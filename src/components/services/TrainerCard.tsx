@@ -19,6 +19,7 @@ export default function TrainerCard({ trainer, onOpen }: TrainerCardProps) {
           src={trainer.image}
           alt={trainer.name}
           className="h-full w-full object-cover"
+          style={trainer.objectPosition ? { objectPosition: trainer.objectPosition } : undefined}
           loading="lazy"
         />
       </div>

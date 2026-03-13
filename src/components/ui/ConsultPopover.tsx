@@ -6,6 +6,7 @@ import { CheckCircle, X } from "@phosphor-icons/react";
 
 export interface ConsultPayload {
   firstName: string;
+  phone: string;
   email: string;
   primaryGoal: string;
 }
@@ -15,7 +16,7 @@ export interface ConsultPopoverProps {
   anchorRef: React.RefObject<HTMLElement>;
   onClose: () => void;
   onSubmit: (payload: ConsultPayload) => Promise<void>;
-  initialFocusField?: "firstName" | "email" | "primaryGoal";
+  initialFocusField?: "firstName" | "phone" | "email" | "primaryGoal";
 }
 
 export default function ConsultPopover({
@@ -26,6 +27,7 @@ export default function ConsultPopover({
   initialFocusField = "firstName",
 }: ConsultPopoverProps) {
   const firstNameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const goalRef = useRef<HTMLTextAreaElement>(null);
 
@@ -36,10 +38,11 @@ export default function ConsultPopover({
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState<ConsultPayload>({
     firstName: "",
+    phone: "",
     email: "",
     primaryGoal: "",
   });
-  const [errors, setErrors] = useState<{ email?: string; firstName?: string; primaryGoal?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; firstName?: string; phone?: string; primaryGoal?: string }>({});
 
   useEffect(() => {
     setIsMounted(true);
@@ -79,11 +82,13 @@ export default function ConsultPopover({
     document.body.style.overflow = "hidden";
 
     const focusTarget =
-      initialFocusField === "email"
-        ? emailRef.current
-        : initialFocusField === "primaryGoal"
-          ? goalRef.current
-          : firstNameRef.current;
+      initialFocusField === "phone"
+        ? phoneRef.current
+        : initialFocusField === "email"
+          ? emailRef.current
+          : initialFocusField === "primaryGoal"
+            ? goalRef.current
+            : firstNameRef.current;
 
     window.requestAnimationFrame(() => {
       focusTarget?.focus();
@@ -105,10 +110,14 @@ export default function ConsultPopover({
   if (!isMounted || !rendered) return null;
 
   const validate = () => {
-    const nextErrors: { email?: string; firstName?: string; primaryGoal?: string } = {};
+    const nextErrors: { email?: string; firstName?: string; phone?: string; primaryGoal?: string } = {};
 
     if (!form.firstName.trim()) {
       nextErrors.firstName = "First name is required.";
+    }
+
+    if (!form.phone.trim()) {
+      nextErrors.phone = "Phone number is required.";
     }
 
     if (!form.email.trim()) {
@@ -132,6 +141,7 @@ export default function ConsultPopover({
     setSubmitting(true);
     await onSubmit({
       firstName: form.firstName.trim(),
+      phone: form.phone.trim(),
       email: form.email.trim(),
       primaryGoal: form.primaryGoal.trim(),
     });
@@ -211,6 +221,21 @@ export default function ConsultPopover({
                 className="h-14 w-full rounded-[1rem] border border-garage-border px-4 text-base text-garage-black outline-none transition-colors focus:border-garage-lilac"
               />
               {errors.firstName ? <span className="mt-1 block text-xs text-red-600">{errors.firstName}</span> : null}
+            </label>
+
+            <label className="block">
+              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-garage-gray">
+                Phone Number
+              </span>
+              <input
+                ref={phoneRef}
+                type="tel"
+                value={form.phone}
+                onChange={(event) => setForm((prev) => ({ ...prev, phone: event.target.value }))}
+                placeholder="(720) 000-0000"
+                className="h-14 w-full rounded-[1rem] border border-garage-border px-4 text-base text-garage-black outline-none transition-colors focus:border-garage-lilac"
+              />
+              {errors.phone ? <span className="mt-1 block text-xs text-red-600">{errors.phone}</span> : null}
             </label>
 
             <label className="block">

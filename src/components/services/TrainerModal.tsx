@@ -148,7 +148,7 @@ export default function TrainerModal({ trainer, onClose }: TrainerModalProps) {
         <div className="flex flex-col items-center gap-5 border-b border-garage-border pb-6 text-center md:flex-row md:items-start md:text-left">
           <div ref={imageRef} className="h-36 w-36 overflow-hidden rounded-full border border-garage-border bg-garage-panel">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" />
+            <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" style={trainer.objectPosition ? { objectPosition: trainer.objectPosition } : undefined} />
           </div>
           <div>
             <h3 ref={nameRef} id="trainer-dialog-title" className="type-h2 text-garage-black">{trainer.name}</h3>

@@ -29,6 +29,7 @@ export default function NavigationLink({
     e.preventDefault();
     onClick?.(e);
     navigateTo(href);
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   return (

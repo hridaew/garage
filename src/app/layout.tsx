@@ -34,6 +34,11 @@ export const metadata: Metadata = {
     "Garage 1880",
     "nutrition coaching Denver",
   ],
+  icons: {
+    icon: "/images/brand/garagefavicon.png",
+    shortcut: "/images/brand/garagefavicon.png",
+    apple: "/images/brand/garagefavicon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

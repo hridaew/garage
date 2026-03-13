@@ -87,7 +87,7 @@ export default function AboutUsPage() {
                       <div className="flex items-center gap-4 md:block md:text-center">
                         <div className="h-32 w-32 shrink-0 overflow-hidden rounded-full border border-garage-border bg-garage-panel md:mx-auto md:h-40 md:w-40">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" />
+                          <img src={trainer.image} alt={trainer.name} className="h-full w-full object-cover" style={trainer.objectPosition ? { objectPosition: trainer.objectPosition } : undefined} />
                         </div>
                         <div className="md:mt-4">
                           <h3 className="type-h3 text-garage-black">{trainer.name}</h3>
