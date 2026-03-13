@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import Reveal from "@/components/motion/Reveal";
 import ContentContainer from "@/components/layout/ContentContainer";
 import ConsultTrigger from "@/components/ui/ConsultTrigger";
