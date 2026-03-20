@@ -59,7 +59,7 @@ export const trainers: TrainerProfile[] = [
     role: "Trainer",
     image: "/images/trainers/madison.jpg",
     bio: "Madi, originally from Texas, attended Stephen F. Austin State University where she earned her degree in Kinesiology. She has a passion for functional fitness and loves helping others move more easily and confidently in their day-to-day lives. Madi believes that lasting success in the gym isn't just about working hard—it's about learning to enjoy the process. When you can do both, healthy habits become sustainable. In her free time, you can find Madi in the gym, out for a run, or spending time with her dogs.",
-    certs: "Kinesiology B.S.",
+    certs: "Kinesiology B.S., CrossFit Level 2 Trainer, AED, CPR",
   },
   {
     id: "derrick",
