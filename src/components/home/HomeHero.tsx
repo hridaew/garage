@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import Reveal from "@/components/motion/Reveal";
 import ContentContainer from "@/components/layout/ContentContainer";
 import ConsultTrigger from "@/components/ui/ConsultTrigger";
@@ -84,10 +85,14 @@ export default function HomeHero() {
             <div className="max-w-xl">
               <Reveal preset="fade">
                 <h1>
-                  <img
-                    src="/images/brand/garagelogowhite.png"
+                  <Image
+                    src="/images/brand/logopnggarage.png"
                     alt="Garage 1880"
+                    width={690}
+                    height={200}
                     className="w-full max-w-md h-auto"
+                    priority
+                    sizes="(min-width: 768px) 448px, 100vw"
                   />
                 </h1>
               </Reveal>
