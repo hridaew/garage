@@ -3,6 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
+const CRITICAL_ASSETS = [
+  "/images/slideimage1.png",
+  "/images/slideimage2.png",
+  "/videos/hero-poster.jpg",
+];
+
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(true);
   const screenRef = useRef<HTMLDivElement>(null);
@@ -19,26 +25,19 @@ export default function LoadingScreen() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    // Animate progress bar from 0 → 100%
+    // Animate logo in
     if (!reducedMotion) {
       gsap.fromTo(
         logo,
         { opacity: 0, scale: 0.92 },
         { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }
       );
-      gsap.fromTo(
-        bar,
-        { scaleX: 0 },
-        { scaleX: 1, duration: 1.2, ease: "power1.inOut" }
-      );
     } else {
       logo.style.opacity = "1";
-      bar.style.transform = "scaleX(1)";
     }
 
     const runExit = () => {
       if (!reducedMotion) {
-        // Fade the logo slightly, then wipe the screen up
         gsap.to(logo, {
           opacity: 0,
           duration: 0.25,
@@ -67,6 +66,7 @@ export default function LoadingScreen() {
 
     const mountTime = Date.now();
     const MIN_DISPLAY_MS = 1000;
+    const FALLBACK_TIMEOUT_MS = 5000;
 
     let dismissed = false;
     const dismiss = () => {
@@ -81,18 +81,38 @@ export default function LoadingScreen() {
       }
     };
 
-    if (document.readyState === "complete") {
-      const t = setTimeout(dismiss, 300);
-      return () => clearTimeout(t);
-    } else {
-      const onLoad = () => dismiss();
-      window.addEventListener("load", onLoad);
-      const timeout = setTimeout(dismiss, 2000);
-      return () => {
-        window.removeEventListener("load", onLoad);
-        clearTimeout(timeout);
-      };
-    }
+    // Preload critical hero assets and track progress
+    let loaded = 0;
+    const total = CRITICAL_ASSETS.length;
+
+    const onAssetReady = () => {
+      loaded++;
+      // Animate progress bar to reflect real loading progress
+      if (!reducedMotion) {
+        gsap.to(bar, {
+          scaleX: loaded / total,
+          duration: 0.3,
+          ease: "power1.out",
+        });
+      } else {
+        bar.style.transform = `scaleX(${loaded / total})`;
+      }
+      if (loaded >= total) dismiss();
+    };
+
+    CRITICAL_ASSETS.forEach((src) => {
+      const img = new Image();
+      img.onload = onAssetReady;
+      img.onerror = onAssetReady; // Don't block on failed images
+      img.src = src;
+    });
+
+    // Safety fallback — never stay stuck
+    const fallback = setTimeout(dismiss, FALLBACK_TIMEOUT_MS);
+
+    return () => {
+      clearTimeout(fallback);
+    };
   }, []);
 
   if (!visible) return null;

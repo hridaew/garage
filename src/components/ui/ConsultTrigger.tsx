@@ -23,8 +23,15 @@ export default function ConsultTrigger({
   const [open, setOpen] = useState(false);
 
   const handleSubmit = async (payload: ConsultPayload) => {
-    void payload;
-    await new Promise((resolve) => setTimeout(resolve, 900));
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ formType: "consult", ...payload }),
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.error || "Something went wrong.");
+    }
   };
 
   return (

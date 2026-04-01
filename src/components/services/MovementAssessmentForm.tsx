@@ -6,13 +6,36 @@ import PremiumButton from "@/components/ui/PremiumButton";
 export default function MovementAssessmentForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setSubmitting(false);
-    setSubmitted(true);
+    setError(null);
+    const formData = new FormData(event.currentTarget);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType: "assessment",
+          firstName: formData.get("firstName"),
+          lastName: formData.get("lastName"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          message: formData.get("message"),
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Something went wrong.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -76,6 +99,10 @@ export default function MovementAssessmentForm() {
           placeholder="Tell us about your goals."
         />
       </label>
+
+      {error && (
+        <p className="mt-4 text-sm text-red-600">{error}</p>
+      )}
 
       <div className="mt-5">
         <PremiumButton type="submit" className="w-full justify-center" disabled={submitting}>

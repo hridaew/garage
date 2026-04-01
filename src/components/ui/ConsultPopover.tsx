@@ -43,6 +43,7 @@ export default function ConsultPopover({
     primaryGoal: "",
   });
   const [errors, setErrors] = useState<{ email?: string; firstName?: string; phone?: string; primaryGoal?: string }>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     setIsMounted(true);
@@ -61,6 +62,7 @@ export default function ConsultPopover({
       setSubmitted(false);
       setSubmitting(false);
       setErrors({});
+      setSubmitError(null);
     } else {
       setVisible(false);
       // Wait for exit transition to finish before unmounting
@@ -139,14 +141,20 @@ export default function ConsultPopover({
     if (!validate()) return;
 
     setSubmitting(true);
-    await onSubmit({
-      firstName: form.firstName.trim(),
-      phone: form.phone.trim(),
-      email: form.email.trim(),
-      primaryGoal: form.primaryGoal.trim(),
-    });
-    setSubmitting(false);
-    setSubmitted(true);
+    setSubmitError(null);
+    try {
+      await onSubmit({
+        firstName: form.firstName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        primaryGoal: form.primaryGoal.trim(),
+      });
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const closeAndReturnFocus = () => {
@@ -268,6 +276,10 @@ export default function ConsultPopover({
                 <span className="mt-1 block text-xs text-red-600">{errors.primaryGoal}</span>
               ) : null}
             </label>
+
+            {submitError && (
+              <p className="text-sm text-red-600">{submitError}</p>
+            )}
 
             <button
               type="submit"
