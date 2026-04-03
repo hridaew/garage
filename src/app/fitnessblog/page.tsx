@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getAllPosts } from "@/lib/wix-blog";
+import { getAllPosts, type BlogPost } from "@/lib/wix-blog";
 import BlogCard from "@/components/blog/BlogCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/motion/Reveal";
@@ -36,42 +36,49 @@ function getCoverImageUrl(post: {
   return `https://static.wixstatic.com/media/${imageUrl}`;
 }
 
+const fallbackPosts: BlogPost[] = [
+  {
+    _id: "mock1",
+    title: "5 Exercises for Building Sustainable Strength",
+    excerpt: "Discover the fundamental movements that will help you build lasting, functional strength without risking injury or burnout.",
+    slug: "5-exercises-for-sustainable-strength",
+    firstPublishedDate: new Date().toISOString(),
+    minutesToRead: 4,
+    coverImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop",
+  },
+  {
+    _id: "mock2",
+    title: "The Importance of Rest Days in Your Routine",
+    excerpt: "Why pushing harder isn't always the answer. Learn how strategic recovery accelerates your fitness progress and mental wellbeing.",
+    slug: "importance-of-rest-days",
+    firstPublishedDate: new Date(Date.now() - 86400000 * 3).toISOString(),
+    minutesToRead: 3,
+    coverImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2720&auto=format&fit=crop",
+  },
+  {
+    _id: "mock3",
+    title: "Nutrition Myths That Are Holding You Back",
+    excerpt: "We break down common dietary misconceptions and explain what actually matters when fueling your body for performance and longevity.",
+    slug: "nutrition-myths-holding-you-back",
+    firstPublishedDate: new Date(Date.now() - 86400000 * 7).toISOString(),
+    minutesToRead: 6,
+    coverImage: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2653&auto=format&fit=crop",
+  },
+];
+
 export default async function BlogPage() {
-  const response = await getAllPosts(20);
-  let posts = response.posts || [];
-  const wixUnavailable = response.meta?.wixUnavailable;
+  let posts: BlogPost[] = [];
+  let wixUnavailable = false;
+  try {
+    const response = await getAllPosts(20);
+    posts = response.posts || [];
+  } catch {
+    wixUnavailable = true;
+  }
 
   // Render dummy posts if Wix is unconfigured or unavailable to keep the layout active during dev
   if (wixUnavailable || posts.length === 0) {
-    posts = [
-      {
-        _id: "mock1",
-        title: "5 Exercises for Building Sustainable Strength",
-        excerpt: "Discover the fundamental movements that will help you build lasting, functional strength without risking injury or burnout.",
-        slug: "5-exercises-for-sustainable-strength",
-        firstPublishedDate: new Date().toISOString(),
-        minutesToRead: 4,
-        coverImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2670&auto=format&fit=crop",
-      },
-      {
-        _id: "mock2",
-        title: "The Importance of Rest Days in Your Routine",
-        excerpt: "Why pushing harder isn't always the answer. Learn how strategic recovery accelerates your fitness progress and mental wellbeing.",
-        slug: "importance-of-rest-days",
-        firstPublishedDate: new Date(Date.now() - 86400000 * 3).toISOString(),
-        minutesToRead: 3,
-        coverImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2720&auto=format&fit=crop",
-      },
-      {
-        _id: "mock3",
-        title: "Nutrition Myths That Are Holding You Back",
-        excerpt: "We break down common dietary misconceptions and explain what actually matters when fueling your body for performance and longevity.",
-        slug: "nutrition-myths-holding-you-back",
-        firstPublishedDate: new Date(Date.now() - 86400000 * 7).toISOString(),
-        minutesToRead: 6,
-        coverImage: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2653&auto=format&fit=crop",
-      }
-    ];
+    posts = fallbackPosts;
   }
 
   return (

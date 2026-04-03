@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import {
   Clock,
@@ -10,6 +11,12 @@ import Reveal from "@/components/motion/Reveal";
 import EmailCopyToast from "@/components/ui/EmailCopyToast";
 import ContactForm from "@/components/contact/ContactForm";
 import ContentContainer from "@/components/layout/ContentContainer";
+
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description:
+    "Get in touch with Garage 1880 in Sunnyside, Denver. Book a free consultation, ask about personal training, or schedule a movement assessment.",
+};
 
 export default function ContactPage() {
   return (

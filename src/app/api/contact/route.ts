@@ -1,17 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
-
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
-
-const RECIPIENT = "info@garage1880.com";
+import { submitContactForm } from "@/lib/wix-forms";
 
 interface ContactBody {
   formType: "contact" | "consult" | "assessment";
@@ -22,60 +10,6 @@ interface ContactBody {
   interest?: string;
   message?: string;
   primaryGoal?: string;
-}
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function buildEmailHtml(body: ContactBody): { subject: string; html: string } {
-  const rows: string[] = [];
-  const add = (label: string, value: string | undefined) => {
-    if (value?.trim()) {
-      rows.push(`<tr><td style="padding:6px 12px;font-weight:600;vertical-align:top;color:#646C7E">${label}</td><td style="padding:6px 12px;color:#1C202C">${escapeHtml(value.trim())}</td></tr>`);
-    }
-  };
-
-  let subject: string;
-
-  switch (body.formType) {
-    case "consult":
-      subject = "[Garage 1880] Free Consult Request";
-      add("Name", body.firstName);
-      add("Phone", body.phone);
-      add("Email", body.email);
-      add("Primary Goal", body.primaryGoal);
-      break;
-    case "assessment":
-      subject = "[Garage 1880] Movement Assessment Request";
-      add("Name", [body.firstName, body.lastName].filter(Boolean).join(" "));
-      add("Email", body.email);
-      add("Phone", body.phone);
-      add("Message", body.message);
-      break;
-    default:
-      subject = "[Garage 1880] New Contact Form Submission";
-      add("Name", [body.firstName, body.lastName].filter(Boolean).join(" "));
-      add("Email", body.email);
-      add("Phone", body.phone);
-      add("Interest", body.interest);
-      add("Message", body.message);
-      break;
-  }
-
-  const html = `
-    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:560px;margin:0 auto">
-      <h2 style="color:#1C202C;margin-bottom:16px">${subject}</h2>
-      <table style="border-collapse:collapse;width:100%">${rows.join("")}</table>
-      <p style="margin-top:24px;font-size:13px;color:#646C7E">Sent from the Garage 1880 website</p>
-    </div>
-  `;
-
-  return { subject, html };
 }
 
 function validate(body: ContactBody): string | null {
@@ -108,15 +42,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error }, { status: 400 });
     }
 
-    const { subject, html } = buildEmailHtml(body);
-
-    await transporter.sendMail({
-      from: `"Garage 1880 Website" <${process.env.SMTP_USER}>`,
-      to: RECIPIENT,
-      replyTo: body.email!.trim(),
-      subject,
-      html,
-    });
+    await submitContactForm(body);
 
     return NextResponse.json({ success: true });
   } catch (err) {
