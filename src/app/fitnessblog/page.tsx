@@ -11,6 +11,13 @@ export const metadata: Metadata = {
   title: "Fitness Blog",
   description:
     "Fitness tips, nutrition advice, and training insights from the Garage 1880 team in Sunnyside, Denver.",
+  alternates: { canonical: "/fitnessblog" },
+  openGraph: {
+    title: "Fitness Blog | Garage 1880",
+    description:
+      "Fitness tips, nutrition advice, and training insights from the Garage 1880 team in Sunnyside, Denver.",
+    url: "/fitnessblog",
+  },
 };
 
 function formatDate(dateStr: string | Date | null | undefined): string {
@@ -70,7 +77,7 @@ export default async function BlogPage() {
   let posts: BlogPost[] = [];
   let wixUnavailable = false;
   try {
-    const response = await getAllPosts(20);
+    const response = await getAllPosts(100);
     posts = response.posts || [];
   } catch {
     wixUnavailable = true;

@@ -20,6 +20,7 @@ const displayFont = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://garage1880.com"),
   title: {
     default: "Garage 1880 | Personal Training in Sunnyside, Denver",
     template: "%s | Garage 1880",
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     "Garage 1880",
     "nutrition coaching Denver",
   ],
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",

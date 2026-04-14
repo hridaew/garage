@@ -42,6 +42,13 @@ export const metadata: Metadata = {
   title: "Services | Personal Training & Nutrition Coaching",
   description:
     "Personal training and nutrition coaching at Garage 1880 in Sunnyside, Denver. Holistic coaching, trainer matching, and movement assessment for long-term results.",
+  alternates: { canonical: "/personal-training" },
+  openGraph: {
+    title: "Services | Personal Training & Nutrition Coaching | Garage 1880",
+    description:
+      "Personal training and nutrition coaching at Garage 1880 in Sunnyside, Denver. Holistic coaching, trainer matching, and movement assessment for long-term results.",
+    url: "/personal-training",
+  },
 };
 
 export default function PersonalTrainingPage() {

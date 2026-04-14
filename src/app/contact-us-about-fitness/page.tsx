@@ -16,6 +16,13 @@ export const metadata: Metadata = {
   title: "Contact Us",
   description:
     "Get in touch with Garage 1880 in Sunnyside, Denver. Book a free consultation, ask about personal training, or schedule a movement assessment.",
+  alternates: { canonical: "/contact-us-about-fitness" },
+  openGraph: {
+    title: "Contact Us | Garage 1880",
+    description:
+      "Get in touch with Garage 1880 in Sunnyside, Denver. Book a free consultation, ask about personal training, or schedule a movement assessment.",
+    url: "/contact-us-about-fitness",
+  },
 };
 
 export default function ContactPage() {

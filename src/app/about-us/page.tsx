@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   title: "About Us | Best Personal Training in Sunnyside",
   description:
     "Meet the Garage 1880 team. Founded by Allie with a vision to provide the highest quality personal training by attracting the highest quality trainers.",
+  alternates: { canonical: "/about-us" },
+  openGraph: {
+    title: "About Us | Garage 1880",
+    description:
+      "Meet the Garage 1880 team. Founded by Allie with a vision to provide the highest quality personal training by attracting the highest quality trainers.",
+    url: "/about-us",
+  },
 };
 
 export default function AboutUsPage() {

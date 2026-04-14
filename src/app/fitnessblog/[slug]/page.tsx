@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug } from "@/lib/wix-blog";
+import { getAllPosts, getPostBySlug } from "@/lib/wix-blog";
 import RichContent from "@/components/blog/RichContent";
 import Reveal from "@/components/motion/Reveal";
 import ContentContainer from "@/components/layout/ContentContainer";
@@ -12,12 +12,36 @@ interface PageProps {
   params: { slug: string };
 }
 
+export async function generateStaticParams() {
+  const response = await getAllPosts(100);
+  const posts = response.posts || [];
+  return posts.filter((p) => p.slug).map((p) => ({ slug: p.slug! }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
   if (!post) return { title: "Post Not Found" };
   return {
     title: post.title,
     description: post.excerpt || undefined,
+    alternates: { canonical: `/fitnessblog/${params.slug}` },
+    openGraph: {
+      type: "article",
+      title: post.title || undefined,
+      description: post.excerpt || undefined,
+      url: `/fitnessblog/${params.slug}`,
+      publishedTime: post.firstPublishedDate
+        ? new Date(post.firstPublishedDate).toISOString()
+        : undefined,
+      modifiedTime: post.lastPublishedDate
+        ? new Date(post.lastPublishedDate).toISOString()
+        : undefined,
+    },
+    twitter: {
+      card: "summary",
+      title: post.title || undefined,
+      description: post.excerpt || undefined,
+    },
   };
 }
 
@@ -34,8 +58,40 @@ export default async function BlogPostPage({ params }: PageProps) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
 
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt || undefined,
+    url: `https://garage1880.com/fitnessblog/${params.slug}`,
+    datePublished: post.firstPublishedDate
+      ? new Date(post.firstPublishedDate).toISOString()
+      : undefined,
+    dateModified: post.lastPublishedDate
+      ? new Date(post.lastPublishedDate).toISOString()
+      : undefined,
+    author: {
+      "@type": "Organization",
+      name: "Garage 1880",
+      url: "https://garage1880.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Garage 1880",
+      url: "https://garage1880.com",
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://garage1880.com/fitnessblog/${params.slug}`,
+    },
+  };
+
   return (
     <section className="section-space-md pt-28 md:pt-34">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
       <ContentContainer>
         <article className="mx-auto max-w-3xl">
         <Reveal preset="fade">
