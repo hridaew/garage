@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Star } from "@phosphor-icons/react";
 
 const testimonials = [
@@ -49,14 +50,14 @@ function TestimonialCard({ testimonial, duplicate = false }: CardProps) {
     >
       {/* Mobile: compact stacked-horizontal layout */}
       <div className="flex items-center gap-4 p-5 md:hidden">
-        <div className="h-16 w-16 shrink-0 overflow-hidden bg-garage-panel">
+        <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-garage-panel">
           {testimonial.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={testimonial.image}
               alt={testimonial.name}
-              className="h-full w-full object-cover"
-              loading="lazy"
+              fill
+              sizes="64px"
+              className="object-cover"
             />
           ) : null}
         </div>
@@ -73,12 +74,12 @@ function TestimonialCard({ testimonial, duplicate = false }: CardProps) {
       {/* Desktop: full side-by-side layout */}
       <div className="relative hidden bg-garage-panel md:block md:w-[40%] md:shrink-0">
         {testimonial.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={testimonial.image}
             alt={testimonial.name}
-            className="h-full w-full object-cover"
-            loading="lazy"
+            fill
+            sizes="(min-width: 768px) 312px, 0px"
+            className="object-cover"
           />
         ) : null}
       </div>

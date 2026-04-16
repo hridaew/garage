@@ -197,7 +197,7 @@ export default function ImageStack() {
             alt={img.alt}
             fill
             className="object-cover"
-            sizes="(min-width: 1024px) 40vw, 0px"
+            sizes="(min-width: 1024px) 40vw, 75vw"
             priority={i === 0}
           />
         </div>

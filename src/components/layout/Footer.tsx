@@ -4,6 +4,7 @@ import ContentContainer from "@/components/layout/ContentContainer";
 import NavigationLink from "@/components/motion/NavigationLink";
 import EasterEgg from "@/components/ui/EasterEgg";
 import EmailCopyToast from "@/components/ui/EmailCopyToast";
+import { siteAddressLines, siteConfig } from "@/config/site";
 
 export default function Footer() {
   return (
@@ -13,7 +14,7 @@ export default function Footer() {
           <Reveal>
             <div className="space-y-4">
               <h5 className="font-display text-xl font-black text-garage-black">GARAGE <EasterEgg /></h5>
-              <p className="text-sm text-garage-gray">Sunnyside, Denver</p>
+              <p className="text-sm text-garage-gray">{siteConfig.address.neighborhood}, {siteConfig.address.locality}</p>
             </div>
 
           </Reveal>
@@ -62,7 +63,7 @@ export default function Footer() {
               <h4 className="text-xs font-bold uppercase tracking-[0.16em] text-garage-black">Hours</h4>
               <ul className="mt-5 space-y-2 text-sm text-garage-gray">
                 <li className="flex justify-between max-w-[180px]">
-                  <span>Mon - Fri</span> <span>6am - 7pm</span>
+                  <span>Mon - Fri</span> <span>{siteConfig.hours.weekdays.display}</span>
                 </li>
                 <li className="flex justify-between max-w-[180px]">
                   <span>Saturday</span> <span>Closed</span>
@@ -78,26 +79,26 @@ export default function Footer() {
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.16em] text-garage-black">Visit Us</h4>
               <address className="mt-5 not-italic text-sm leading-relaxed text-garage-gray">
-                4255 Jason St Unit B
+                {siteAddressLines[0]}
                 <br />
-                Sunnyside, Denver, CO 80211
+                {siteAddressLines[1]}
               </address>
               <div className="mt-6 flex space-x-3">
                 <a
-                  href="https://www.instagram.com/garage1880_/"
+                  href={siteConfig.social.instagram.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-[0.85rem] border border-garage-border text-garage-black transition-colors hover:border-garage-blue hover:text-garage-blue active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-garage-lilac"
-                  aria-label="Garage 1880 Instagram"
+                  aria-label={`${siteConfig.name} Instagram`}
                 >
                   <InstagramLogo weight="fill" size={22} />
                 </a>
                 <a
-                  href="https://www.facebook.com/Garage1880"
+                  href={siteConfig.social.facebook.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-[0.85rem] border border-garage-border text-garage-black transition-colors hover:border-garage-blue hover:text-garage-blue active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-garage-lilac"
-                  aria-label="Garage 1880 Facebook"
+                  aria-label={`${siteConfig.name} Facebook`}
                 >
                   <FacebookLogo weight="fill" size={22} />
                 </a>
@@ -108,7 +109,7 @@ export default function Footer() {
 
         <Reveal delay={0.2}>
           <div className="mt-14 flex items-center justify-between border-t border-garage-border pt-8 text-xs font-medium text-garage-gray">
-            <p>&copy;{new Date().getFullYear()} Garage 1880</p>
+            <p>&copy;{new Date().getFullYear()} {siteConfig.name}</p>
           </div>
         </Reveal>
       </ContentContainer>

@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { Copy } from "@phosphor-icons/react";
+import { siteConfig } from "@/config/site";
 
 export default function EmailCopyToast() {
     const [copied, setCopied] = useState(false);
-    const email = "info@garage1880.com";
+    const email = siteConfig.email;
 
     const handleCopy = async () => {
         try {

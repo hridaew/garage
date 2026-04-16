@@ -11,6 +11,7 @@ import Reveal from "@/components/motion/Reveal";
 import EmailCopyToast from "@/components/ui/EmailCopyToast";
 import ContactForm from "@/components/contact/ContactForm";
 import ContentContainer from "@/components/layout/ContentContainer";
+import { siteAddressLines, siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -81,9 +82,9 @@ export default function ContactPage() {
                   Visit Us
                 </h3>
                 <address className="not-italic leading-relaxed text-garage-gray">
-                  4255 Jason St Unit B
+                  {siteAddressLines[0]}
                   <br />
-                  Sunnyside, Denver, CO 80211
+                  {siteAddressLines[1]}
                 </address>
               </div>
 
@@ -94,7 +95,7 @@ export default function ContactPage() {
                 </h3>
                 <ul className="space-y-1 text-garage-gray">
                   <li className="flex justify-between max-w-[200px]">
-                    <span>Mon - Fri</span> <span>6am - 7pm</span>
+                    <span>Mon - Fri</span> <span>{siteConfig.hours.weekdays.display}</span>
                   </li>
                   <li className="flex justify-between max-w-[200px]">
                     <span>Saturday</span> <span>Closed</span>
@@ -109,20 +110,20 @@ export default function ContactPage() {
                 <h3 className="mb-4 text-xl font-bold text-garage-black">Follow Us</h3>
                 <div className="flex gap-4">
                   <a
-                    href="https://www.instagram.com/garage1880_/"
+                    href={siteConfig.social.instagram.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-12 w-12 items-center justify-center rounded-[0.85rem] border border-garage-border text-garage-black transition-all hover:border-garage-blue hover:text-garage-blue"
-                    aria-label="Garage 1880 Instagram"
+                    aria-label={`${siteConfig.name} Instagram`}
                   >
                     <InstagramLogo weight="fill" size={22} />
                   </a>
                   <a
-                    href="https://www.facebook.com/Garage1880"
+                    href={siteConfig.social.facebook.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex h-12 w-12 items-center justify-center rounded-[0.85rem] border border-garage-border text-garage-black transition-all hover:border-garage-blue hover:text-garage-blue"
-                    aria-label="Garage 1880 Facebook"
+                    aria-label={`${siteConfig.name} Facebook`}
                   >
                     <FacebookLogo weight="fill" size={22} />
                   </a>

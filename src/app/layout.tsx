@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Instrument_Sans } from "next/font/google";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import RouteTransitionLayer from "@/components/motion/RouteTransitionLayer";
 import LoadingScreen from "@/components/motion/LoadingScreen";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const bodyFont = DM_Sans({
@@ -40,43 +41,58 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Garage 1880",
+    title: "Garage 1880 | Personal Training in Sunnyside, Denver",
+    description:
+      "Personal training gym in Sunnyside, Denver. Sustainable fitness plans designed for real life. Aim for 1% better every day.",
+    images: ["/og-image.jpg"],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Garage 1880 | Personal Training in Sunnyside, Denver",
+    description:
+      "Personal training gym in Sunnyside, Denver. Sustainable fitness plans designed for real life.",
+    images: ["/og-image.jpg"],
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light",
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "GymOrFitnessFacility",
-  name: "Garage 1880",
+  name: siteConfig.name,
   description:
     "Personal training gym in Sunnyside, Denver. Sustainable fitness plans designed for real life.",
-  url: "https://garage1880.com",
-  telephone: "+17207456158",
+  url: siteConfig.url,
+  telephone: siteConfig.phone,
+  email: siteConfig.email,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "4255 Jason St Unit B",
-    addressLocality: "Denver",
-    addressRegion: "CO",
-    postalCode: "80211",
-    addressCountry: "US",
+    streetAddress: siteConfig.address.street,
+    addressLocality: siteConfig.address.locality,
+    addressRegion: siteConfig.address.region,
+    postalCode: siteConfig.address.postalCode,
+    addressCountry: siteConfig.address.country,
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 39.78,
-    longitude: -105.01,
+    latitude: siteConfig.geo.latitude,
+    longitude: siteConfig.geo.longitude,
   },
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "06:00",
-      closes: "19:00",
+      opens: siteConfig.hours.weekdays.open,
+      closes: siteConfig.hours.weekdays.close,
     },
   ],
-  sameAs: [
-    "https://www.instagram.com/garage1880_/",
-    "https://www.facebook.com/Garage1880",
-  ],
-  image: "https://garage1880.com/og-image.jpg",
+  sameAs: [siteConfig.social.instagram.url, siteConfig.social.facebook.url],
+  image: `${siteConfig.url}/og-image.jpg`,
   priceRange: "$$",
 };
 

@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug } from "@/lib/wix-blog";
+import { getAllPosts, getCoverImageUrl, getPostBySlug, readSeoTags } from "@/lib/wix-blog";
 import RichContent from "@/components/blog/RichContent";
+import { RichContentErrorBoundary } from "@/components/blog/RichContentErrorBoundary";
 import Reveal from "@/components/motion/Reveal";
 import ContentContainer from "@/components/layout/ContentContainer";
 
@@ -13,23 +14,37 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const response = await getAllPosts(100);
-  const posts = response.posts || [];
-  return posts.filter((p) => p.slug).map((p) => ({ slug: p.slug! }));
+  try {
+    const response = await getAllPosts(100);
+    const posts = response.posts || [];
+    return posts.filter((p) => p.slug).map((p) => ({ slug: p.slug! }));
+  } catch (err) {
+    console.error("[blog/[slug]] generateStaticParams failed; posts will render on-demand via ISR:", err);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
   if (!post) return { title: "Post Not Found" };
+
+  const seo = readSeoTags(post);
+  const title = seo.title || post.title || undefined;
+  const description = seo.description || post.excerpt || undefined;
+  const ogTitle = seo.ogTitle || title;
+  const ogDescription = seo.ogDescription || description;
+  const ogImage = seo.ogImage;
+
   return {
-    title: post.title,
-    description: post.excerpt || undefined,
-    alternates: { canonical: `/fitnessblog/${params.slug}` },
+    title,
+    description,
+    alternates: { canonical: seo.canonical || `/fitnessblog/${params.slug}` },
     openGraph: {
       type: "article",
-      title: post.title || undefined,
-      description: post.excerpt || undefined,
+      title: ogTitle,
+      description: ogDescription,
       url: `/fitnessblog/${params.slug}`,
+      images: ogImage ? [{ url: ogImage }] : undefined,
       publishedTime: post.firstPublishedDate
         ? new Date(post.firstPublishedDate).toISOString()
         : undefined,
@@ -38,9 +53,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         : undefined,
     },
     twitter: {
-      card: "summary",
-      title: post.title || undefined,
-      description: post.excerpt || undefined,
+      card: ogImage ? "summary_large_image" : "summary",
+      title: ogTitle,
+      description: ogDescription,
+      images: ogImage ? [ogImage] : undefined,
     },
   };
 }
@@ -58,11 +74,15 @@ export default async function BlogPostPage({ params }: PageProps) {
   const post = await getPostBySlug(params.slug);
   if (!post) notFound();
 
+  const seo = readSeoTags(post);
+  const postImage = getCoverImageUrl(post) ?? seo.ogImage;
+
   const blogPostingJsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt || undefined,
+    image: postImage,
     url: `https://garage1880.com/fitnessblog/${params.slug}`,
     datePublished: post.firstPublishedDate
       ? new Date(post.firstPublishedDate).toISOString()
@@ -86,11 +106,36 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
   };
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://garage1880.com" },
+      { "@type": "ListItem", position: 2, name: "Fitness Blog", item: "https://garage1880.com/fitnessblog" },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `https://garage1880.com/fitnessblog/${params.slug}`,
+      },
+    ],
+  };
+
+  const excerptFallback = post.excerpt ? (
+    <p className="leading-relaxed text-garage-ink">{post.excerpt}</p>
+  ) : (
+    <p className="text-garage-gray">No content available.</p>
+  );
+
   return (
     <section className="section-space-md pt-28 md:pt-34">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <ContentContainer>
         <article className="mx-auto max-w-3xl">
@@ -122,11 +167,11 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         <Reveal delay={0.1} className="mt-10 border border-garage-border bg-white px-6 py-8 md:px-8 md:py-10">
           {post.richContent ? (
-            <RichContent content={post.richContent} />
-          ) : post.excerpt ? (
-            <p className="leading-relaxed text-garage-ink">{post.excerpt}</p>
+            <RichContentErrorBoundary fallback={excerptFallback}>
+              <RichContent content={post.richContent} />
+            </RichContentErrorBoundary>
           ) : (
-            <p className="text-garage-gray">No content available.</p>
+            excerptFallback
           )}
         </Reveal>
 

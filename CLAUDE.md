@@ -62,7 +62,16 @@ src/components/
 ### Image Sources
 Remote images allowed from `static.wixstatic.com` and `images.unsplash.com` (configured in `next.config.mjs`). Always use Next.js `<Image>` for remote images.
 
+### Deployment
+- Push to `main` on GitHub (`hridaew/garage`) triggers Netlify build automatically
+- Do NOT use Vercel
+
 ### SEO
-- Metadata and JSON-LD schema configured in root layout
+- `metadataBase` set to `https://garage1880.com` in root layout — all relative metadata URLs resolve against this
+- Every page has `alternates.canonical` and `openGraph` metadata
+- Blog posts (`/fitnessblog/[slug]`) have BlogPosting JSON-LD schema, OG article tags, and Twitter cards
+- `generateStaticParams` in `[slug]/page.tsx` pre-builds all ~46 blog pages at build time via `getAllPosts(100)`
 - `robots.ts` and `sitemap.ts` generate SEO files dynamically
-- Legacy URL redirects configured in `next.config.mjs`
+- **Sitemap `lastModified`** for static pages uses a fixed date — update it manually when static page content changes
+- Legacy Wix URL redirects (`/post/*`, `/blog/*` → `/fitnessblog/*`) configured as permanent 301s in `next.config.mjs`
+- Blog listing page fetches `getAllPosts(100)` to ensure all posts have internal links (critical for Google indexing)

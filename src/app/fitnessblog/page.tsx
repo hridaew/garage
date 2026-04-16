@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getAllPosts, type BlogPost } from "@/lib/wix-blog";
+import { getAllPosts, getCoverImageUrl, type BlogPost } from "@/lib/wix-blog";
 import BlogCard from "@/components/blog/BlogCard";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal from "@/components/motion/Reveal";
@@ -27,20 +27,6 @@ function formatDate(dateStr: string | Date | null | undefined): string {
     month: "short",
     day: "numeric",
   });
-}
-
-function getCoverImageUrl(post: {
-  media?: { wixMedia?: { image?: string } };
-  coverImage?: string;
-}): string | undefined {
-  const imageUrl = post.media?.wixMedia?.image || post.coverImage;
-  if (!imageUrl) return undefined;
-  if (imageUrl.startsWith("http")) return imageUrl;
-  if (imageUrl.startsWith("wix:image://")) {
-    const parts = imageUrl.replace("wix:image://v1/", "").split("/");
-    return `https://static.wixstatic.com/media/${parts[0]}`;
-  }
-  return `https://static.wixstatic.com/media/${imageUrl}`;
 }
 
 const fallbackPosts: BlogPost[] = [

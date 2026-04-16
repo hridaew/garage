@@ -6,6 +6,7 @@ import { InstagramLogo } from "@phosphor-icons/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { siteConfig } from "@/config/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,12 +56,12 @@ export default function InstagramFeed() {
       <div className="mb-6 flex items-center gap-3">
         <InstagramLogo size={24} weight="bold" className="text-garage-ink" />
         <a
-          href="https://www.instagram.com/garage1880_/"
+          href={siteConfig.social.instagram.url}
           target="_blank"
           rel="noopener noreferrer"
           className="text-base font-bold text-garage-black transition-colors hover:text-garage-lilac"
         >
-          @garage1880_
+          {siteConfig.social.instagram.handle}
         </a>
       </div>
 
@@ -68,7 +69,7 @@ export default function InstagramFeed() {
         {photos.map((photo) => (
           <a
             key={photo.src}
-            href="https://www.instagram.com/garage1880_/"
+            href={siteConfig.social.instagram.url}
             target="_blank"
             rel="noopener noreferrer"
             data-ig-item

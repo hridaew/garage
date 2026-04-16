@@ -1,15 +1,25 @@
 import { createClient, ApiKeyStrategy } from "@wix/sdk";
 import { submissions } from "@wix/forms";
 
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(
+      `[wix-forms] Missing required env var ${name}. Set it in .env.local (local) or Netlify environment variables (prod). See README.md.`,
+    );
+  }
+  return value;
+}
+
 const wixFormsClient = createClient({
   modules: { submissions },
   auth: ApiKeyStrategy({
-    siteId: process.env.WIX_SITE_ID!,
-    apiKey: process.env.WIX_API_KEY!,
+    siteId: requireEnv("WIX_SITE_ID"),
+    apiKey: requireEnv("WIX_API_KEY"),
   }),
 });
 
-const FORM_ID = process.env.WIX_CONTACT_FORM_ID!;
+const FORM_ID = requireEnv("WIX_CONTACT_FORM_ID");
 
 // Field target keys from the Wix form definition
 const FIELD = {

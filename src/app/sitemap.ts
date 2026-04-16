@@ -12,18 +12,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/fitnessblog`, lastModified: "2026-04-14", changeFrequency: "weekly", priority: 0.9 },
   ];
 
-  const response = await getAllPosts(100);
-  const posts = response.posts || [];
-  const blogPages: MetadataRoute.Sitemap = posts
-    .filter((post) => Boolean(post.slug))
-    .map((post) => ({
-      url: `${BASE_URL}/fitnessblog/${post.slug}`,
-      lastModified: post.lastPublishedDate
-        ? new Date(post.lastPublishedDate)
-        : new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    }));
+  let blogPages: MetadataRoute.Sitemap = [];
+  try {
+    const response = await getAllPosts(100);
+    const posts = response.posts || [];
+    blogPages = posts
+      .filter((post) => Boolean(post.slug))
+      .map((post) => ({
+        url: `${BASE_URL}/fitnessblog/${post.slug}`,
+        lastModified: post.lastPublishedDate
+          ? new Date(post.lastPublishedDate)
+          : new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      }));
+  } catch (err) {
+    console.error("[sitemap] Failed to fetch blog posts; emitting static pages only:", err);
+  }
 
   return [...staticPages, ...blogPages];
 }
