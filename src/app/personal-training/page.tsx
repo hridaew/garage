@@ -7,6 +7,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ContentContainer from "@/components/layout/ContentContainer";
 import TrainerGrid from "@/components/services/TrainerGrid";
 import MovementAssessmentForm from "@/components/services/MovementAssessmentForm";
+import PremiumButton from "@/components/ui/PremiumButton";
 
 const services = [
   {
@@ -27,6 +28,30 @@ const services = [
       "Nutrition is a critical piece of any fitness journey. Our coaches help you build sustainable eating habits that complement your training goals.",
       "No crash diets or extreme restrictions. We focus on practical, real-world nutrition strategies that fit your lifestyle and help you perform at your best.",
     ],
+  },
+];
+
+const expandedServices = [
+  {
+    title: "Open Gym",
+    subtitle: "FRIDAY 5PM — SUNDAY MIDNIGHT",
+    body: "Train on your own time with full access to the space throughout the weekend. Whether you're getting an extra lift in or following your program independently, open gym gives you the flexibility to stay consistent—without adding more to your schedule.",
+    note: "Included for all subscription personal training clients.",
+    cta: "Become a client",
+  },
+  {
+    title: "Programming",
+    subtitle: "SUPPORT BEYOND YOUR SESSIONS",
+    body: "Your progress shouldn't stop when you leave the gym. All subscription clients receive fully individualized programming delivered through the Garage1880 app—so your workouts are always accessible, whether you're in the gym, at home, or traveling.",
+    extra: "Looking for programming with occasional in-person guidance? We offer options that include form check sessions so you can stay confident and on track.",
+    cta: "Start with a consultation",
+  },
+  {
+    title: "Online Programming",
+    subtitle: "TRAIN WITH US—FROM ANYWHERE",
+    body: "Not based in Denver? You can still train with Garage1880. Our online programming is delivered through the Garage1880 app, giving you access to a personalized plan, progress tracking, and ongoing support—no matter where you are.",
+    extra: "We recommend starting with a virtual consultation so we can build a plan that's actually designed for you—not pulled from a template.",
+    cta: "Book a virtual consultation",
   },
 ];
 
@@ -108,6 +133,38 @@ export default function PersonalTrainingPage() {
                 </p>
               </div>
             </Reveal>
+          </div>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md">
+        <ContentContainer>
+          <SectionHeading
+            eyebrow="Services"
+            title="Training support that follows you"
+            description="Garage 1880 clients get more than time on the gym floor. These options help you stay consistent between sessions, through travel, and from anywhere."
+          />
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {expandedServices.map((service, index) => (
+              <Reveal key={service.title} delay={index * 0.06} className="h-full">
+                <article className="flex h-full flex-col border border-garage-border bg-white p-6 md:p-7">
+                  <p className="type-label text-garage-blue">{service.title}</p>
+                  <h3 className="mt-3 type-h3 text-garage-black">{service.subtitle}</h3>
+                  <div className="mt-4 grow space-y-4 type-body text-garage-gray">
+                    <p>{service.body}</p>
+                    {service.extra ? <p>{service.extra}</p> : null}
+                    {service.note ? (
+                      <p className="text-sm font-semibold text-garage-black">{service.note}</p>
+                    ) : null}
+                  </div>
+                  <div className="mt-7">
+                    <PremiumButton href="/contact-us-about-fitness" variant="ghost" className="w-full">
+                      {service.cta}
+                    </PremiumButton>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </ContentContainer>
       </section>

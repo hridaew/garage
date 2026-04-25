@@ -10,6 +10,37 @@ interface ContactBody {
   interest?: string;
   message?: string;
   primaryGoal?: string;
+  website?: string;
+  submittedAt?: number;
+}
+
+const MIN_SUBMIT_TIME_MS = 2500;
+
+function isLikelySpam(body: ContactBody): boolean {
+  if (body.website?.trim()) return true;
+
+  if (!body.submittedAt || Date.now() - body.submittedAt < MIN_SUBMIT_TIME_MS) {
+    return true;
+  }
+
+  const text = [
+    body.firstName,
+    body.lastName,
+    body.email,
+    body.phone,
+    body.interest,
+    body.message,
+    body.primaryGoal,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const urlCount = (text.match(/https?:\/\//gi) ?? []).length;
+  if (urlCount > 1) return true;
+
+  return /(casino|crypto|loan|viagra|backlink|guest post|seo services|rank higher|rank on google|telegram|whatsapp)/i.test(
+    text,
+  );
 }
 
 function validate(body: ContactBody): string | null {
@@ -36,6 +67,10 @@ function validate(body: ContactBody): string | null {
 export async function POST(request: NextRequest) {
   try {
     const body: ContactBody = await request.json();
+
+    if (isLikelySpam(body)) {
+      return NextResponse.json({ success: true });
+    }
 
     const error = validate(body);
     if (error) {

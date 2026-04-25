@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import ContentContainer from "@/components/layout/ContentContainer";
+import NavigationLink from "@/components/motion/NavigationLink";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -21,18 +21,18 @@ export default function NotFound() {
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Link
+          <NavigationLink
             href="/"
             className="inline-flex items-center gap-2 rounded-lg bg-garage-black px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-garage-blue"
           >
             Go Home
-          </Link>
-          <Link
+          </NavigationLink>
+          <NavigationLink
             href="/contact-us-about-fitness"
             className="inline-flex items-center gap-2 rounded-lg border border-garage-border px-6 py-3 text-sm font-semibold text-garage-black transition-colors hover:bg-garage-light"
           >
             Contact Us
-          </Link>
+          </NavigationLink>
         </div>
       </ContentContainer>
     </section>

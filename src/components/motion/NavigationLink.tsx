@@ -23,13 +23,14 @@ export default function NavigationLink({
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Allow cmd/ctrl-click to open in new tab
     if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    if (rest.target && rest.target !== "_self") return;
     // Allow external links
     if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("tel:")) return;
 
-    e.preventDefault();
     onClick?.(e);
+    if (e.defaultPrevented) return;
+    e.preventDefault();
     navigateTo(href);
-    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   return (

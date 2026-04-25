@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CaretDown, CheckCircle, PaperPlaneTilt } from "@phosphor-icons/react";
 import PremiumButton from "@/components/ui/PremiumButton";
 
@@ -12,7 +12,9 @@ export default function ContactForm() {
     phone: "",
     interest: "Personal Training",
     message: "",
+    website: "",
   });
+  const submittedAt = useRef(Date.now());
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +31,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ formType: "contact", ...form }),
+        body: JSON.stringify({ formType: "contact", submittedAt: submittedAt.current, ...form }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
@@ -59,6 +61,18 @@ export default function ContactForm() {
       <p className="mt-2 text-sm text-garage-gray">Tell us about your goals.</p>
 
       <div className="mt-8 space-y-6">
+        <label className="sr-only" aria-hidden="true">
+          Website
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={form.website}
+            onChange={update("website")}
+          />
+        </label>
+
         {/* Name group */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label htmlFor="contact-firstName" className="space-y-2 text-sm text-garage-ink">

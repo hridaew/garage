@@ -97,12 +97,6 @@ export default function ContactPage() {
                   <li className="flex justify-between max-w-[200px]">
                     <span>Mon - Fri</span> <span>{siteConfig.hours.weekdays.display}</span>
                   </li>
-                  <li className="flex justify-between max-w-[200px]">
-                    <span>Saturday</span> <span>Closed</span>
-                  </li>
-                  <li className="flex justify-between max-w-[200px]">
-                    <span>Sunday</span> <span>Closed</span>
-                  </li>
                 </ul>
               </div>
 

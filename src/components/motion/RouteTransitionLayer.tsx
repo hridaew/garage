@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { gsap } from "gsap";
 
 type TransitionState = "idle" | "covering" | "covered" | "revealing";
 
@@ -25,8 +26,23 @@ export default function RouteTransitionLayer({ children }: RouteTransitionLayerP
   const router = useRouter();
   const pathname = usePathname();
   const [state, setState] = useState<TransitionState>("idle");
-  const pendingHref = useRef<string | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const stateRef = useRef<TransitionState>("idle");
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const targetPathRef = useRef<string | null>(null);
+  const fallbackTimerRef = useRef<number | null>(null);
+
+  const updateState = useCallback((nextState: TransitionState) => {
+    stateRef.current = nextState;
+    setState(nextState);
+  }, []);
+
+  const clearFallbackTimer = useCallback(() => {
+    if (!fallbackTimerRef.current) return;
+    window.clearTimeout(fallbackTimerRef.current);
+    fallbackTimerRef.current = null;
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -36,51 +52,115 @@ export default function RouteTransitionLayer({ children }: RouteTransitionLayerP
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // When pathname changes after router.push and we're in "covered" state, reveal
   useEffect(() => {
-    if (state !== "covered") return;
-    window.scrollTo(0, 0);
-    // Small delay to ensure the new page content has rendered
-    requestAnimationFrame(() => {
-      setState("revealing");
-    });
-  }, [pathname, state]);
+    const overlay = overlayRef.current;
+    if (!overlay) return;
 
-  const handleTransitionEnd = useCallback(() => {
-    if (state === "covering") {
-      // Curtain is fully opaque — navigate
-      setState("covered");
-      if (pendingHref.current) {
-        router.push(pendingHref.current);
-        pendingHref.current = null;
-      }
-    } else if (state === "revealing") {
-      setState("idle");
+    gsap.set(overlay, { autoAlpha: 0, xPercent: -100 });
+
+    return () => {
+      timelineRef.current?.kill();
+      clearFallbackTimer();
+    };
+  }, [clearFallbackTimer]);
+
+  const reveal = useCallback(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) {
+      updateState("idle");
+      return;
     }
-  }, [state, router]);
+
+    clearFallbackTimer();
+    timelineRef.current?.kill();
+    updateState("revealing");
+    window.scrollTo(0, 0);
+
+    if (reducedMotion) {
+      gsap.set(overlay, { autoAlpha: 0, xPercent: -100 });
+      updateState("idle");
+      targetPathRef.current = null;
+      return;
+    }
+
+    timelineRef.current = gsap
+      .timeline({
+        defaults: { ease: "power3.inOut" },
+        onComplete: () => {
+          gsap.set(overlay, { autoAlpha: 0, xPercent: -100 });
+          targetPathRef.current = null;
+          updateState("idle");
+        },
+      })
+      .to(overlay, { xPercent: 100, duration: 0.46 }, 0);
+  }, [clearFallbackTimer, reducedMotion, updateState]);
+
+  useEffect(() => {
+    if (stateRef.current !== "covered") return;
+    if (targetPathRef.current && pathname !== targetPathRef.current) return;
+
+    let secondFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(reveal);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      if (secondFrame) window.cancelAnimationFrame(secondFrame);
+    };
+  }, [pathname, reveal]);
 
   const navigateTo = useCallback(
     (href: string) => {
-      if (state !== "idle") return;
-      if (href === pathname) return;
+      if (stateRef.current !== "idle") return;
 
-      pendingHref.current = href;
-
-      if (reducedMotion) {
-        // Skip animation — navigate instantly
-        router.push(href);
-        pendingHref.current = null;
-        window.scrollTo(0, 0);
+      const target = new URL(href, window.location.origin);
+      const current = new URL(window.location.href);
+      if (target.origin !== current.origin) {
+        window.location.href = href;
         return;
       }
 
-      setState("covering");
-    },
-    [state, pathname, router, reducedMotion]
-  );
+      if (target.pathname === pathname && target.search === current.search && target.hash) {
+        window.location.hash = target.hash;
+        return;
+      }
 
-  const curtainOpacity = state === "covering" || state === "covered" ? 1 : 0;
-  const curtainPointerEvents = state === "idle" ? "none" : "auto";
+      if (target.pathname === pathname && target.search === current.search && !target.hash) return;
+
+      targetPathRef.current = target.pathname;
+      timelineRef.current?.kill();
+      updateState("covering");
+
+      if (reducedMotion) {
+        gsap.set(overlayRef.current, { autoAlpha: 1, xPercent: 0 });
+        updateState("covered");
+        router.push(href);
+        return;
+      }
+
+      const overlay = overlayRef.current;
+      if (!overlay) {
+        router.push(href);
+        updateState("idle");
+        return;
+      }
+
+      gsap.set(overlay, { autoAlpha: 1, xPercent: -100 });
+
+      timelineRef.current = gsap
+        .timeline({
+          defaults: { ease: "power3.inOut" },
+          onComplete: () => {
+            updateState("covered");
+            router.push(href);
+            fallbackTimerRef.current = window.setTimeout(reveal, 7000);
+          },
+        })
+        .to(overlay, { xPercent: 0, duration: 0.42 }, 0);
+    },
+    [pathname, router, reducedMotion, reveal, updateState]
+  );
 
   return (
     <TransitionContext.Provider value={{ navigateTo }}>
@@ -88,13 +168,9 @@ export default function RouteTransitionLayer({ children }: RouteTransitionLayerP
         {children}
       </div>
       <div
-        className="fixed inset-0 z-[60] bg-[rgb(var(--garage-canvas))]"
-        style={{
-          opacity: curtainOpacity,
-          pointerEvents: curtainPointerEvents as React.CSSProperties["pointerEvents"],
-          transition: reducedMotion ? "none" : "opacity 300ms ease-in-out",
-        }}
-        onTransitionEnd={handleTransitionEnd}
+        ref={overlayRef}
+        data-transition-state={state}
+        className="fixed inset-0 z-[1000] pointer-events-auto bg-garage-black"
         aria-hidden
       />
     </TransitionContext.Provider>

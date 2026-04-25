@@ -52,30 +52,43 @@ export default function AboutUsPage() {
         <MosaicBackground />
 
         <ContentContainer className="relative z-10">
-          <Reveal>
-            <div className="mx-auto max-w-3xl space-y-6 border border-garage-border bg-white p-8 type-body text-garage-gray shadow-[0_20px_50px_rgba(0,0,0,0.08)] md:p-10">
-              <p>
-                As you may have guessed from our name, Garage 1880 started in an actual garage. But before we were
-                even in a garage, our founder Allie was working at training studios, commercial gyms, and building up
-                her own clientele through social media.
+          <Reveal preset="slide-right" duration={0.65}>
+            <article className="mx-auto max-w-3xl border border-garage-border bg-white px-7 py-10 shadow-[0_24px_70px_rgba(0,0,0,0.10)] md:px-12 md:py-14">
+              <p className="type-label text-garage-blue">Our Origin</p>
+              <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-garage-black md:text-5xl">
+                Built to take better care of trainers.
+              </h2>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-garage-gray">
+                Garage 1880 started with a simple idea: when trainers are supported well, clients receive better care.
               </p>
-              <p>
-                As Allie worked at different studios and gyms she saw the same pattern over and over again: Trainers
-                were not able to make enough money when they got started to pay for basic needs, so they picked up
-                side jobs. This led to trainers having little energy to focus on their personal training clients and
-                eventually quitting personal training.
-              </p>
-              <p className="type-h3 text-garage-black">
-                Allie opened Garage 1880 with the vision of being able to provide the highest quality training by
-                attracting the highest quality trainers.
-              </p>
-              <p>
-                The best way to do that? Pay a fair and livable wage day one. Provide high quality continuing
-                education, create a team environment with monthly seminars and create the standard of listening to
-                clients and addressing needs on a personalized, case-by-case, basis.
-              </p>
-              <p className="italic">We take care of our trainers so they can take care of you!</p>
-            </div>
+
+              <div className="mt-10 space-y-6 border-t border-garage-border pt-9 type-body text-garage-gray">
+                <p>
+                  As you may have guessed from our name, Garage 1880 started in an actual garage. But before we were
+                  even in a garage, our founder Allie was working at training studios, commercial gyms, and building up
+                  her own clientele through social media.
+                </p>
+                <p>
+                  As Allie worked at different studios and gyms she saw the same pattern over and over again: Trainers
+                  were not able to make enough money when they got started to pay for basic needs, so they picked up
+                  side jobs. This led to trainers having little energy to focus on their personal training clients and
+                  eventually quitting personal training.
+                </p>
+              </div>
+
+              <div className="my-10 space-y-6 type-body text-garage-gray">
+                <p>
+                  Allie opened Garage 1880 with the vision of being able to provide the highest quality training by
+                  attracting the highest quality trainers.
+                </p>
+                <p>
+                  The best way to do that? Pay a fair and livable wage day one. Provide high quality continuing
+                  education, create a team environment with monthly seminars and create the standard of listening to
+                  clients and addressing needs on a personalized, case-by-case, basis.
+                </p>
+                <p>We take care of our trainers so they can take care of you!</p>
+              </div>
+            </article>
           </Reveal>
         </ContentContainer>
       </section>

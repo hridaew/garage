@@ -1,11 +1,12 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPosts, getCoverImageUrl, getPostBySlug, readSeoTags } from "@/lib/wix-blog";
 import RichContent from "@/components/blog/RichContent";
 import { RichContentErrorBoundary } from "@/components/blog/RichContentErrorBoundary";
 import Reveal from "@/components/motion/Reveal";
 import ContentContainer from "@/components/layout/ContentContainer";
+import { getCanonicalUrl } from "@/lib/seo-url";
+import NavigationLink from "@/components/motion/NavigationLink";
 
 export const revalidate = 3600;
 
@@ -34,16 +35,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogTitle = seo.ogTitle || title;
   const ogDescription = seo.ogDescription || description;
   const ogImage = seo.ogImage;
+  const canonicalUrl = getCanonicalUrl(`/fitnessblog/${params.slug}`);
 
   return {
     title,
     description,
-    alternates: { canonical: seo.canonical || `/fitnessblog/${params.slug}` },
+    alternates: { canonical: canonicalUrl },
     openGraph: {
       type: "article",
       title: ogTitle,
       description: ogDescription,
-      url: `/fitnessblog/${params.slug}`,
+      url: canonicalUrl,
       images: ogImage ? [{ url: ogImage }] : undefined,
       publishedTime: post.firstPublishedDate
         ? new Date(post.firstPublishedDate).toISOString()
@@ -76,6 +78,9 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const seo = readSeoTags(post);
   const postImage = getCoverImageUrl(post) ?? seo.ogImage;
+  const postUrl = getCanonicalUrl(`/fitnessblog/${params.slug}`);
+  const homeUrl = getCanonicalUrl();
+  const blogUrl = getCanonicalUrl("/fitnessblog");
 
   const blogPostingJsonLd = {
     "@context": "https://schema.org",
@@ -83,7 +88,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     headline: post.title,
     description: post.excerpt || undefined,
     image: postImage,
-    url: `https://garage1880.com/fitnessblog/${params.slug}`,
+    url: postUrl,
     datePublished: post.firstPublishedDate
       ? new Date(post.firstPublishedDate).toISOString()
       : undefined,
@@ -93,16 +98,16 @@ export default async function BlogPostPage({ params }: PageProps) {
     author: {
       "@type": "Organization",
       name: "Garage 1880",
-      url: "https://garage1880.com",
+      url: homeUrl,
     },
     publisher: {
       "@type": "Organization",
       name: "Garage 1880",
-      url: "https://garage1880.com",
+      url: homeUrl,
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://garage1880.com/fitnessblog/${params.slug}`,
+      "@id": postUrl,
     },
   };
 
@@ -110,13 +115,13 @@ export default async function BlogPostPage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://garage1880.com" },
-      { "@type": "ListItem", position: 2, name: "Fitness Blog", item: "https://garage1880.com/fitnessblog" },
+      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+      { "@type": "ListItem", position: 2, name: "Fitness Blog", item: blogUrl },
       {
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: `https://garage1880.com/fitnessblog/${params.slug}`,
+        item: postUrl,
       },
     ],
   };
@@ -140,13 +145,13 @@ export default async function BlogPostPage({ params }: PageProps) {
       <ContentContainer>
         <article className="mx-auto max-w-3xl">
         <Reveal preset="fade">
-          <Link
+          <NavigationLink
             href="/fitnessblog"
             className="inline-flex items-center gap-2 text-sm font-medium text-garage-gray transition-colors hover:text-garage-black"
           >
             <span aria-hidden>&larr;</span>
             Back to Blog
-          </Link>
+          </NavigationLink>
         </Reveal>
 
         <Reveal className="mt-5">
@@ -176,13 +181,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         </Reveal>
 
         <Reveal delay={0.12} className="mt-8">
-          <Link
+          <NavigationLink
             href="/fitnessblog"
             className="inline-flex items-center gap-2 text-garage-blue hover:underline"
           >
             <span aria-hidden>&larr;</span>
             All Posts
-          </Link>
+          </NavigationLink>
         </Reveal>
         </article>
       </ContentContainer>

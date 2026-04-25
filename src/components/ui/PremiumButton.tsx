@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import Magnetic from "@/components/motion/Magnetic";
+import NavigationLink from "@/components/motion/NavigationLink";
 
 export interface PremiumButtonProps {
   children: React.ReactNode;
@@ -134,7 +134,7 @@ export default function PremiumButton({
   ) : null;
 
   const element = href ? (
-    <Link
+    <NavigationLink
       href={href}
       className={classes}
       aria-disabled={disabled}
@@ -155,7 +155,7 @@ export default function PremiumButton({
     >
       {content}
       {bursts}
-    </Link>
+    </NavigationLink>
   ) : (
     <button
       type={type}

@@ -4,6 +4,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import RouteTransitionLayer from "@/components/motion/RouteTransitionLayer";
 import LoadingScreen from "@/components/motion/LoadingScreen";
 import { siteConfig } from "@/config/site";
+import { canonicalSiteUrl, getCanonicalUrl } from "@/lib/seo-url";
 import "./globals.css";
 
 const bodyFont = DM_Sans({
@@ -21,7 +22,7 @@ const displayFont = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://garage1880.com"),
+  metadataBase: new URL(canonicalSiteUrl),
   title: {
     default: "Garage 1880 | Personal Training in Sunnyside, Denver",
     template: "%s | Garage 1880",
@@ -92,7 +93,7 @@ const jsonLd = {
     },
   ],
   sameAs: [siteConfig.social.instagram.url, siteConfig.social.facebook.url],
-  image: `${siteConfig.url}/og-image.jpg`,
+  image: getCanonicalUrl("/og-image.jpg"),
   priceRange: "$$",
 };
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NavigationLink from "@/components/motion/NavigationLink";
 
 interface BlogCardProps {
   title: string;
@@ -20,7 +20,7 @@ export default function BlogCard({
   coverImageUrl,
 }: BlogCardProps) {
   return (
-    <Link href={`/fitnessblog/${slug}`} className="group block h-full">
+    <NavigationLink href={`/fitnessblog/${slug}`} className="group block h-full">
       <article className="h-full overflow-hidden border border-garage-border bg-white transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-soft">
         {coverImageUrl ? (
           <div className="overflow-hidden">
@@ -58,6 +58,6 @@ export default function BlogCard({
           </span>
         </div>
       </article>
-    </Link>
+    </NavigationLink>
   );
 }

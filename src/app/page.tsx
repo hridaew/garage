@@ -7,6 +7,7 @@ import Testimonials from "@/components/home/Testimonials";
 import ConsultTrigger from "@/components/ui/ConsultTrigger";
 import ContentContainer from "@/components/layout/ContentContainer";
 import InstagramFeed from "@/components/home/InstagramFeed";
+import PremiumButton from "@/components/ui/PremiumButton";
 
 const gallery = [
   {
@@ -26,24 +27,54 @@ const gallery = [
   },
 ];
 
-const services = [
+const valueProps = [
   {
-    title: "Personal Training",
-    image: "/images/personaltraining.jpeg",
-    alt: "One to one personal training",
-    paragraphs: [
-      "One-to-one personal training is the primary service offered at Garage 1880. We recognize that everyone is different and work hard to provide the most individualized approach to wellness possible.",
-      "The experience and expertise our trainers provide gives you access to the best and most effective personal training in Denver.",
-    ],
+    eyebrow: "Real Focus",
+    title: "Private Sessions. Full Attention.",
+    body: "Every session is 1:1, with your coach fully focused on you—your form, your movement, and your progress. No distractions, no guesswork.",
   },
   {
-    title: "Nutrition Coaching",
-    image: "/images/services/nutrition.jpg",
-    alt: "Nutrition coaching",
-    paragraphs: [
-      "Nutrition is a critical piece of any fitness journey. Our coaches help you build sustainable eating habits that complement your training goals.",
-      "No crash diets or extreme restrictions. We focus on practical, real-world nutrition strategies that fit your lifestyle and help you perform at your best.",
-    ],
+    eyebrow: "Sustainable",
+    title: "Built Around Your Life",
+    body: "Your training should support your life, not take it over. We create plans that are realistic, adaptable, and designed to keep you progressing long-term.",
+  },
+  {
+    eyebrow: "Intentional Strength",
+    title: "Build Strength That Actually Lasts",
+    body: "Strength isn't just about what you do in the gym—it's about how your body supports you outside of it. We focus on building resilience, stability, and confidence so you can move through life feeling capable.",
+  },
+  {
+    eyebrow: "Individualized Training",
+    title: "This isn't one-size-fits-all.",
+    body: "Every program is built specifically for you—your goals, your history, and how your body moves—so you're making meaningful, lasting progress.",
+  },
+  {
+    eyebrow: "Move With Confidence",
+    title: "Feel Better in Your Body",
+    body: "Improve strength, mobility, and coordination with training designed to help you move without pain, build trust in your body, and show up stronger in your everyday life.",
+  },
+  {
+    eyebrow: "Expert Coaching",
+    title: "Guidance That Meets You Where You Are",
+    body: "Our coaches don't just tell you what to do—we teach you why it matters—so you build strength with purpose and understand how to keep progressing.",
+  },
+];
+
+const serviceTeasers = [
+  {
+    title: "Open Gym",
+    subtitle: "Friday 5PM — Sunday Midnight",
+    body: "Train on your own time with full access to the space throughout the weekend.",
+  },
+  {
+    title: "Programming",
+    subtitle: "Support Beyond Your Sessions",
+    body: "Subscription clients receive individualized programming through the Garage1880 app for training in the gym, at home, or on the road.",
+  },
+  {
+    title: "Online Programming",
+    subtitle: "Train With Us From Anywhere",
+    body: "Not based in Denver? Get a personalized plan, progress tracking, and ongoing support through the Garage1880 app.",
   },
 ];
 
@@ -54,21 +85,27 @@ export default function Home() {
 
       {/* Philosophy */}
       <section className="section-space-lg bg-white">
-        <ContentContainer className="grid gap-16 lg:grid-cols-[1fr_1.15fr] lg:items-center">
-          <Reveal>
-            <div className="max-w-[500px] space-y-6">
-              <p className="type-label text-garage-blue">Our Philosophy</p>
-              <h2 className="type-h2 text-garage-black">Aim for 1% better.</h2>
-              <p className="type-body-lg text-garage-gray">
-                There are no quick fixes that lead to lasting change. At Garage 1880, you won&apos;t find
-                cookie-cutter plans, unsustainable methods, or extremes.
-              </p>
-            </div>
-          </Reveal>
+        <ContentContainer>
+          <div className="grid gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+            <Reveal>
+              <div className="max-w-[560px] space-y-6">
+                <p className="type-label text-garage-blue">Our Philosophy</p>
+                <h2 className="type-h2 text-garage-black">Aim for 1% better.</h2>
+                <p className="type-body-lg text-garage-gray">
+                  There are no quick fixes that lead to lasting change. At Garage 1880, you won&apos;t find
+                  cookie-cutter plans, unsustainable methods, or extremes.
+                </p>
+                <div className="border border-garage-border bg-garage-light px-6 py-7 text-garage-gray md:px-8">
+                  <p className="type-body">
+                    What you will find is a team that meets you where you are, no matter where you are. We&apos;ll
+                    design your workouts for when you&apos;re at home or traveling too. Change takes time. We&apos;re
+                    here to create habits and results for life.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {/* Image 1 + text card 1 — column A */}
-            <div className="flex flex-col gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <Reveal className="sm:translate-y-8">
                 <article className="overflow-hidden border border-garage-border bg-white">
                   <div className="relative h-[260px] sm:h-[360px]">
@@ -82,18 +119,6 @@ export default function Home() {
                   </div>
                 </article>
               </Reveal>
-              <Reveal delay={0.12}>
-                <div className="border border-garage-border bg-white px-6 py-6">
-                  <h3 className="type-h3 text-garage-black">Real Focus</h3>
-                  <p className="mt-2 type-body text-garage-gray">
-                    Private sessions where the attention is 100% on your form.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-
-            {/* Image 2 + text card 2 — column B */}
-            <div className="flex flex-col gap-6">
               <Reveal delay={0.08}>
                 <article className="overflow-hidden border border-garage-border bg-white">
                   <div className="relative h-[260px] sm:h-[360px]">
@@ -107,26 +132,20 @@ export default function Home() {
                   </div>
                 </article>
               </Reveal>
-              <Reveal delay={0.14}>
-                <div className="border border-garage-border bg-white px-6 py-6">
-                  <h3 className="type-h3 text-garage-black">Sustainable</h3>
-                  <p className="mt-2 type-body text-garage-gray">
-                    Plans built around your life, not the other way around.
-                  </p>
-                </div>
-              </Reveal>
             </div>
-
-            {/* Full-width quote — spans both columns */}
-            <Reveal delay={0.1} className="sm:col-span-2">
-              <div className="border border-garage-border bg-garage-light px-6 py-7 text-garage-gray md:px-8">
-                <p className="type-body">
-                  What you will find is a team that meets you where you are, no matter where you are. We&apos;ll design your workouts for when you&apos;re at home or traveling too. Change takes time. We&apos;re here to create habits and results for life.
-                </p>
-              </div>
-            </Reveal>
           </div>
 
+          <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {valueProps.map((item, index) => (
+              <Reveal key={item.eyebrow} delay={index * 0.04} className="h-full">
+                <article className="h-full border border-garage-border bg-white px-6 py-7">
+                  <p className="type-label text-garage-blue">{item.eyebrow}</p>
+                  <h3 className="mt-3 type-h3 text-garage-black">{item.title}</h3>
+                  <p className="mt-3 type-body text-garage-gray">{item.body}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
         </ContentContainer>
       </section>
 
@@ -173,36 +192,27 @@ export default function Home() {
         <ContentContainer>
           <SectionHeading
             eyebrow="Services"
-            title="Personal Training & Nutrition Coaching"
-            description="We take a holistic approach to personal training at Garage 1880."
+            title="More ways to stay consistent"
+            description="Weekend access, custom programming, and remote support give you more flexibility without losing the personal coaching Garage 1880 is built on."
             align="center"
             className="mx-auto"
           />
-          <div className="mt-16 grid items-stretch gap-6 lg:grid-cols-2">
-            {services.map((service, index) => (
+          <div className="mt-16 grid items-stretch gap-6 md:grid-cols-3">
+            {serviceTeasers.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.07} className="h-full">
-                <article className="group flex h-full flex-col overflow-hidden border border-garage-border bg-white">
-                  <div className="relative w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] max-h-[500px]">
-                    <Image
-                      src={service.image}
-                      alt={service.alt}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                      sizes="(min-width: 1024px) 50vw, 100vw"
-                    />
-                  </div>
-                  <div className="flex h-full flex-col p-6 lg:p-8">
-                    <h3 className="type-h3 text-garage-black">{service.title}</h3>
-                    <div className="mt-4 grow space-y-3 type-body text-garage-gray">
-                      {service.paragraphs.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </div>
-                  </div>
+                <article className="flex h-full flex-col border border-garage-border bg-white p-6 md:p-7">
+                  <p className="type-label text-garage-blue">{service.title}</p>
+                  <h3 className="mt-3 text-2xl font-bold text-garage-black">{service.subtitle}</h3>
+                  <p className="mt-4 grow type-body text-garage-gray">{service.body}</p>
                 </article>
               </Reveal>
             ))}
           </div>
+          <Reveal delay={0.18} className="mt-10 flex justify-center">
+            <PremiumButton href="/personal-training" variant="ghost" size="lg">
+              View all services
+            </PremiumButton>
+          </Reveal>
         </ContentContainer>
       </section>
 

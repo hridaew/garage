@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 
 const PORT = Number(process.env.SCREENSHOT_PORT || 4020);
 const BASE_URL = `http://127.0.0.1:${PORT}`;
@@ -55,10 +55,12 @@ async function main() {
   const stamp = new Date().toISOString().replace(/[.:]/g, "-");
   const outputDir = path.resolve("artifacts", "screenshots", stamp);
   fs.mkdirSync(outputDir, { recursive: true });
+  const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
 
-  const server = spawn("npm", ["run", "start", "--", "-p", String(PORT)], {
+  const server = spawn(npmCommand, ["run", "start", "--", "-p", String(PORT)], {
     stdio: ["ignore", "pipe", "pipe"],
     env: { ...process.env },
+    shell: process.platform === "win32",
   });
 
   let serverLog = "";
@@ -101,7 +103,11 @@ async function main() {
     process.stderr.write(serverLog);
     process.exitCode = 1;
   } finally {
-    server.kill("SIGTERM");
+    if (process.platform === "win32" && server.pid) {
+      spawnSync("taskkill", ["/pid", String(server.pid), "/T", "/F"], { stdio: "ignore" });
+    } else {
+      server.kill("SIGTERM");
+    }
   }
 }
 

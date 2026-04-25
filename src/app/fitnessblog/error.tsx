@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import ContentContainer from "@/components/layout/ContentContainer";
+import NavigationLink from "@/components/motion/NavigationLink";
 
 export default function FitnessBlogError({
   error,
@@ -32,12 +32,12 @@ export default function FitnessBlogError({
             >
               Try again
             </button>
-            <Link
+            <NavigationLink
               href="/fitnessblog"
               className="inline-flex items-center justify-center border border-garage-border px-6 py-3 text-sm font-semibold text-garage-black transition-colors hover:bg-garage-panel"
             >
               Back to Blog
-            </Link>
+            </NavigationLink>
           </div>
         </div>
       </ContentContainer>

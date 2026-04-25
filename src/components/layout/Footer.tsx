@@ -65,13 +65,10 @@ export default function Footer() {
                 <li className="flex justify-between max-w-[180px]">
                   <span>Mon - Fri</span> <span>{siteConfig.hours.weekdays.display}</span>
                 </li>
-                <li className="flex justify-between max-w-[180px]">
-                  <span>Saturday</span> <span>Closed</span>
-                </li>
-                <li className="flex justify-between max-w-[180px]">
-                  <span>Sunday</span> <span>Closed</span>
-                </li>
               </ul>
+              <p className="mt-4 max-w-[190px] text-xs leading-relaxed text-garage-gray">
+                Weekend Open Gym is available for subscription personal training clients.
+              </p>
             </div>
           </Reveal>
 

@@ -17,7 +17,7 @@ export const siteConfig = {
     longitude: -105.01,
   },
   hours: {
-    weekdays: { open: "06:00", close: "19:00", display: "6am - 7pm" },
+    weekdays: { open: "05:00", close: "21:00", display: "5:00 AM - 9:00 PM" },
   },
   social: {
     instagram: {

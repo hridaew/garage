@@ -9,6 +9,8 @@ export interface ConsultPayload {
   phone: string;
   email: string;
   primaryGoal: string;
+  website?: string;
+  submittedAt?: number;
 }
 
 export interface ConsultPopoverProps {
@@ -30,6 +32,7 @@ export default function ConsultPopover({
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const goalRef = useRef<HTMLTextAreaElement>(null);
+  const submittedAt = useRef(Date.now());
 
   const [isMounted, setIsMounted] = useState(false);
   const [rendered, setRendered] = useState(false);
@@ -41,6 +44,7 @@ export default function ConsultPopover({
     phone: "",
     email: "",
     primaryGoal: "",
+    website: "",
   });
   const [errors, setErrors] = useState<{ email?: string; firstName?: string; phone?: string; primaryGoal?: string }>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -63,6 +67,7 @@ export default function ConsultPopover({
       setSubmitting(false);
       setErrors({});
       setSubmitError(null);
+      submittedAt.current = Date.now();
     } else {
       setVisible(false);
       // Wait for exit transition to finish before unmounting
@@ -148,6 +153,8 @@ export default function ConsultPopover({
         phone: form.phone.trim(),
         email: form.email.trim(),
         primaryGoal: form.primaryGoal.trim(),
+        website: form.website?.trim(),
+        submittedAt: submittedAt.current,
       });
       setSubmitted(true);
     } catch (err) {
@@ -217,6 +224,17 @@ export default function ConsultPopover({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
+            <label className="sr-only" aria-hidden="true">
+              Website
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={form.website}
+                onChange={(event) => setForm((prev) => ({ ...prev, website: event.target.value }))}
+              />
+            </label>
+
             <label className="block">
               <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.16em] text-garage-gray">
                 First Name
