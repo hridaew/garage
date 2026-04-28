@@ -43,7 +43,7 @@ export default function MovementAssessmentForm() {
 
   if (submitted) {
     return (
-      <div className="surface-card px-6 py-10 text-center">
+      <div className="py-10 text-center">
         <h3 className="type-h3 text-garage-black">Thanks for submitting!</h3>
         <p className="mt-3 type-body text-garage-gray">We will reach out shortly with next steps.</p>
       </div>
@@ -51,7 +51,7 @@ export default function MovementAssessmentForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="surface-card px-5 py-6 md:px-7">
+    <form onSubmit={handleSubmit}>
       <label className="sr-only" aria-hidden="true">
         Website
         <input type="text" name="website" tabIndex={-1} autoComplete="off" />

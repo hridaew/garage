@@ -139,6 +139,36 @@ export default function PersonalTrainingPage() {
 
       <section className="section-space-md">
         <ContentContainer>
+          <div className="grid items-stretch gap-6 md:grid-cols-2">
+            {services.map((service, index) => (
+              <Reveal key={service.title} delay={index * 0.08} className="h-full">
+                <article className="group flex h-full flex-col overflow-hidden border border-garage-border bg-white">
+                  <div className="relative h-[480px]">
+                    <Image
+                      src={service.image}
+                      alt={service.alt}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                    />
+                  </div>
+                  <div className="flex h-full flex-col p-6">
+                    <h3 className="type-h3 text-garage-black">{service.title}</h3>
+                    <div className="mt-4 space-y-4 type-body text-garage-gray">
+                      {service.paragraphs.map((paragraph) => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </ContentContainer>
+      </section>
+
+      <section className="section-space-md">
+        <ContentContainer>
           <SectionHeading
             eyebrow="Services"
             title="Training support that follows you"
@@ -161,36 +191,6 @@ export default function PersonalTrainingPage() {
                     <PremiumButton href="/contact-us-about-fitness" variant="ghost" className="w-full">
                       {service.cta}
                     </PremiumButton>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </ContentContainer>
-      </section>
-
-      <section className="section-space-md">
-        <ContentContainer>
-          <div className="grid items-stretch gap-6 md:grid-cols-2">
-            {services.map((service, index) => (
-              <Reveal key={service.title} delay={index * 0.08} className="h-full">
-                <article className="group flex h-full flex-col overflow-hidden border border-garage-border bg-white">
-                  <div className="relative h-[480px]">
-                    <Image
-                      src={service.image}
-                      alt={service.alt}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                    />
-                  </div>
-                  <div className="flex h-full flex-col p-6">
-                    <h3 className="type-h3 text-garage-black">{service.title}</h3>
-                    <div className="mt-4 space-y-4 type-body text-garage-gray">
-                      {service.paragraphs.map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </div>
                   </div>
                 </article>
               </Reveal>

@@ -27,39 +27,6 @@ const gallery = [
   },
 ];
 
-const valueProps = [
-  {
-    eyebrow: "Real Focus",
-    title: "Private Sessions. Full Attention.",
-    body: "Every session is 1:1, with your coach fully focused on you—your form, your movement, and your progress. No distractions, no guesswork.",
-  },
-  {
-    eyebrow: "Sustainable",
-    title: "Built Around Your Life",
-    body: "Your training should support your life, not take it over. We create plans that are realistic, adaptable, and designed to keep you progressing long-term.",
-  },
-  {
-    eyebrow: "Intentional Strength",
-    title: "Build Strength That Actually Lasts",
-    body: "Strength isn't just about what you do in the gym—it's about how your body supports you outside of it. We focus on building resilience, stability, and confidence so you can move through life feeling capable.",
-  },
-  {
-    eyebrow: "Individualized Training",
-    title: "This isn't one-size-fits-all.",
-    body: "Every program is built specifically for you—your goals, your history, and how your body moves—so you're making meaningful, lasting progress.",
-  },
-  {
-    eyebrow: "Move With Confidence",
-    title: "Feel Better in Your Body",
-    body: "Improve strength, mobility, and coordination with training designed to help you move without pain, build trust in your body, and show up stronger in your everyday life.",
-  },
-  {
-    eyebrow: "Expert Coaching",
-    title: "Guidance That Meets You Where You Are",
-    body: "Our coaches don't just tell you what to do—we teach you why it matters—so you build strength with purpose and understand how to keep progressing.",
-  },
-];
-
 const serviceTeasers = [
   {
     title: "Open Gym",
@@ -90,25 +57,30 @@ export default function Home() {
             <Reveal>
               <div className="max-w-[560px] space-y-6">
                 <p className="type-label text-garage-blue">Our Philosophy</p>
-                <h2 className="type-h2 text-garage-black">Aim for 1% better.</h2>
+                <h2 className="type-h2 text-garage-black">
+                  Train different&mdash;because we train you.
+                </h2>
                 <p className="type-body-lg text-garage-gray">
-                  There are no quick fixes that lead to lasting change. At Garage 1880, you won&apos;t find
-                  cookie-cutter plans, unsustainable methods, or extremes.
+                  The fitness industry is built on quick fixes, extremes, and one-size-fits-all plans. We&apos;re not.
                 </p>
-                <div className="border border-garage-border bg-garage-light px-6 py-7 text-garage-gray md:px-8">
-                  <p className="type-body">
-                    What you will find is a team that meets you where you are, no matter where you are. We&apos;ll
-                    design your workouts for when you&apos;re at home or traveling too. Change takes time. We&apos;re
-                    here to create habits and results for life.
-                  </p>
-                </div>
+                <p className="type-body-lg text-garage-gray">
+                  At Garage 1880, you&apos;re not a number, a before-and-after, or a template. You&apos;re an
+                  individual&mdash;with your own goals, history, and relationship to health.
+                </p>
+                <p className="type-body-lg text-garage-gray">
+                  We listen first. Then we build a plan around you. No extremes&mdash;just thoughtful coaching,
+                  consistent progress, and a focus on results that actually last.
+                </p>
+                <p className="type-body-lg text-garage-gray">
+                  This is training designed for real life&mdash;and built to stay with you for it.
+                </p>
               </div>
             </Reveal>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <Reveal className="sm:translate-y-8">
-                <article className="overflow-hidden border border-garage-border bg-white">
-                  <div className="relative h-[260px] sm:h-[360px]">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+              <Reveal className="sm:-translate-y-10 lg:-translate-y-14">
+                <article className="overflow-hidden border border-garage-border bg-white shadow-soft">
+                  <div className="relative h-[260px] sm:h-[380px] lg:h-[420px]">
                     <Image
                       src="/images/trainer1.png"
                       alt="Training with weights"
@@ -119,9 +91,9 @@ export default function Home() {
                   </div>
                 </article>
               </Reveal>
-              <Reveal delay={0.08}>
-                <article className="overflow-hidden border border-garage-border bg-white">
-                  <div className="relative h-[260px] sm:h-[360px]">
+              <Reveal delay={0.08} className="sm:translate-y-10 lg:translate-y-14">
+                <article className="overflow-hidden border border-garage-border bg-white shadow-soft">
+                  <div className="relative h-[240px] sm:h-[340px] lg:h-[380px]">
                     <Image
                       src="/images/trainer2.png"
                       alt="Garage 1880 training"
@@ -133,18 +105,6 @@ export default function Home() {
                 </article>
               </Reveal>
             </div>
-          </div>
-
-          <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {valueProps.map((item, index) => (
-              <Reveal key={item.eyebrow} delay={index * 0.04} className="h-full">
-                <article className="h-full border border-garage-border bg-white px-6 py-7">
-                  <p className="type-label text-garage-blue">{item.eyebrow}</p>
-                  <h3 className="mt-3 type-h3 text-garage-black">{item.title}</h3>
-                  <p className="mt-3 type-body text-garage-gray">{item.body}</p>
-                </article>
-              </Reveal>
-            ))}
           </div>
         </ContentContainer>
       </section>

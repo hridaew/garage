@@ -56,7 +56,7 @@ export default function AboutUsPage() {
             <article className="mx-auto max-w-3xl border border-garage-border bg-white px-7 py-10 shadow-[0_24px_70px_rgba(0,0,0,0.10)] md:px-12 md:py-14">
               <p className="type-label text-garage-blue">Our Origin</p>
               <h2 className="mt-4 font-display text-4xl font-bold leading-tight text-garage-black md:text-5xl">
-                Built to take better care of trainers.
+                Built to deliver better training.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-garage-gray">
                 Garage 1880 started with a simple idea: when trainers are supported well, clients receive better care.

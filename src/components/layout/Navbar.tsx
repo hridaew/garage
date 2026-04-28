@@ -90,15 +90,26 @@ export default function Navbar() {
               </NavigationLink>
 
               <div className="hidden items-center gap-2 md:flex">
-                {links.map((link) => (
-                  <NavigationLink
-                    key={link.href}
-                    href={link.href}
-                    className="rounded-[0.75rem] px-5 py-2.5 text-[15px] font-bold text-garage-ink transition-all hover:bg-garage-light hover:text-garage-black active:scale-[0.98] active:bg-[#ebe7fb] focus-visible:ring-2 focus-visible:ring-garage-lilac"
-                  >
-                    {link.label}
-                  </NavigationLink>
-                ))}
+                {links.map((link) => {
+                  const isActive =
+                    link.href === "/"
+                      ? pathname === "/"
+                      : pathname === link.href || pathname.startsWith(`${link.href}/`);
+                  return (
+                    <NavigationLink
+                      key={link.href}
+                      href={link.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`rounded-[0.75rem] px-5 py-2.5 text-[15px] font-bold transition-all active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-garage-lilac ${
+                        isActive
+                          ? "bg-[#ebe7fb] text-garage-black"
+                          : "text-garage-ink hover:bg-garage-light hover:text-garage-black active:bg-[#ebe7fb]"
+                      }`}
+                    >
+                      {link.label}
+                    </NavigationLink>
+                  );
+                })}
               </div>
 
               <div className="flex items-center gap-2">
@@ -143,16 +154,27 @@ export default function Navbar() {
             Navigate
           </p>
           <div className="space-y-3">
-            {links.map((link) => (
-              <NavigationLink
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block rounded-[0.95rem] border border-garage-border px-5 py-4 text-2xl font-display font-bold text-garage-black transition-colors hover:border-garage-lilac focus-visible:ring-2 focus-visible:ring-garage-lilac"
-              >
-                {link.label}
-              </NavigationLink>
-            ))}
+            {links.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname === link.href || pathname.startsWith(`${link.href}/`);
+              return (
+                <NavigationLink
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`block rounded-[0.95rem] border px-5 py-4 text-2xl font-display font-bold text-garage-black transition-colors focus-visible:ring-2 focus-visible:ring-garage-lilac ${
+                    isActive
+                      ? "border-garage-lilac bg-[#ebe7fb]"
+                      : "border-garage-border hover:border-garage-lilac"
+                  }`}
+                >
+                  {link.label}
+                </NavigationLink>
+              );
+            })}
           </div>
           <div className="mt-auto">
             <ConsultTrigger size="lg" buttonClassName="w-full justify-center" />

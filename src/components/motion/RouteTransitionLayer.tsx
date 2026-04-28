@@ -96,7 +96,7 @@ export default function RouteTransitionLayer({ children }: RouteTransitionLayerP
   }, [clearFallbackTimer, reducedMotion, updateState]);
 
   useEffect(() => {
-    if (stateRef.current !== "covered") return;
+    if (state !== "covered") return;
     if (targetPathRef.current && pathname !== targetPathRef.current) return;
 
     let secondFrame = 0;
@@ -108,7 +108,7 @@ export default function RouteTransitionLayer({ children }: RouteTransitionLayerP
       window.cancelAnimationFrame(firstFrame);
       if (secondFrame) window.cancelAnimationFrame(secondFrame);
     };
-  }, [pathname, reveal]);
+  }, [pathname, state, reveal]);
 
   const navigateTo = useCallback(
     (href: string) => {
@@ -154,7 +154,7 @@ export default function RouteTransitionLayer({ children }: RouteTransitionLayerP
           onComplete: () => {
             updateState("covered");
             router.push(href);
-            fallbackTimerRef.current = window.setTimeout(reveal, 7000);
+            fallbackTimerRef.current = window.setTimeout(reveal, 1500);
           },
         })
         .to(overlay, { xPercent: 0, duration: 0.42 }, 0);
