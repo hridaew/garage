@@ -27,6 +27,39 @@ const gallery = [
   },
 ];
 
+const valueProps = [
+  {
+    eyebrow: "Real Focus",
+    title: "Private Sessions. Full Attention.",
+    body: "Every session is 1:1, with your coach fully focused on you—your form, your movement, and your progress. No distractions, no guesswork.",
+  },
+  {
+    eyebrow: "Sustainable",
+    title: "Built Around Your Life",
+    body: "Your training should support your life, not take it over. We create plans that are realistic, adaptable, and designed to keep you progressing long-term.",
+  },
+  {
+    eyebrow: "Intentional Strength",
+    title: "Build Strength That Actually Lasts",
+    body: "Strength isn't just about what you do in the gym—it's about how your body supports you outside of it. We focus on building resilience, stability, and confidence so you can move through life feeling capable.",
+  },
+  {
+    eyebrow: "Individualized Training",
+    title: "This isn't one-size-fits-all.",
+    body: "Every program is built specifically for you—your goals, your history, and how your body moves—so you're making meaningful, lasting progress.",
+  },
+  {
+    eyebrow: "Move With Confidence",
+    title: "Feel Better in Your Body",
+    body: "Improve strength, mobility, and coordination with training designed to help you move without pain, build trust in your body, and show up stronger in your everyday life.",
+  },
+  {
+    eyebrow: "Expert Coaching",
+    title: "Guidance That Meets You Where You Are",
+    body: "Our coaches don't just tell you what to do—we teach you why it matters—so you build strength with purpose and understand how to keep progressing.",
+  },
+];
+
 const serviceTeasers = [
   {
     title: "Open Gym",
@@ -105,6 +138,18 @@ export default function Home() {
                 </article>
               </Reveal>
             </div>
+          </div>
+
+          <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {valueProps.map((item, index) => (
+              <Reveal key={item.eyebrow} delay={index * 0.04} className="h-full">
+                <article className="h-full border border-garage-border bg-white px-6 py-7">
+                  <p className="type-label text-garage-blue">{item.eyebrow}</p>
+                  <h3 className="mt-3 type-h3 text-garage-black">{item.title}</h3>
+                  <p className="mt-3 type-body text-garage-gray">{item.body}</p>
+                </article>
+              </Reveal>
+            ))}
           </div>
         </ContentContainer>
       </section>
