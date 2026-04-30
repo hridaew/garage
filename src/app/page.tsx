@@ -31,32 +31,17 @@ const valueProps = [
   {
     eyebrow: "Real Focus",
     title: "Private Sessions. Full Attention.",
-    body: "Every session is 1:1, with your coach fully focused on you—your form, your movement, and your progress. No distractions, no guesswork.",
+    body: "Every session is 1:1, with your coach fully focused on you—your form, your movement, and your progress",
   },
   {
     eyebrow: "Sustainable",
     title: "Built Around Your Life",
-    body: "Your training should support your life, not take it over. We create plans that are realistic, adaptable, and designed to keep you progressing long-term.",
+    body: "Your training should support your life, not take it over. We create plans that are realistic and adaptable.",
   },
   {
     eyebrow: "Intentional Strength",
-    title: "Build Strength That Actually Lasts",
-    body: "Strength isn't just about what you do in the gym—it's about how your body supports you outside of it. We focus on building resilience, stability, and confidence so you can move through life feeling capable.",
-  },
-  {
-    eyebrow: "Individualized Training",
-    title: "This isn't one-size-fits-all.",
-    body: "Every program is built specifically for you—your goals, your history, and how your body moves—so you're making meaningful, lasting progress.",
-  },
-  {
-    eyebrow: "Move With Confidence",
-    title: "Feel Better in Your Body",
-    body: "Improve strength, mobility, and coordination with training designed to help you move without pain, build trust in your body, and show up stronger in your everyday life.",
-  },
-  {
-    eyebrow: "Expert Coaching",
-    title: "Guidance That Meets You Where You Are",
-    body: "Our coaches don't just tell you what to do—we teach you why it matters—so you build strength with purpose and understand how to keep progressing.",
+    title: "Build Strength That Lasts",
+    body: "Strength that carries beyond the gym—on the trail, on the slopes, and in whatever matters most to you.",
   },
 ];
 
@@ -94,15 +79,15 @@ export default function Home() {
                   Train different&mdash;because we train you.
                 </h2>
                 <p className="type-body-lg text-garage-gray">
-                  The fitness industry is built on quick fixes, extremes, and one-size-fits-all plans. We&apos;re not.
+                  The fitness industry is built on quick fixes and one-size-fits-all plans. We&apos;re not.
                 </p>
                 <p className="type-body-lg text-garage-gray">
-                  At Garage 1880, you&apos;re not a number, a before-and-after, or a template. You&apos;re an
-                  individual&mdash;with your own goals, history, and relationship to health.
+                  At Garage 1880, you&apos;re not a number&mdash;you&apos;re an individual with your own goals,
+                  history, and relationship to health.
                 </p>
                 <p className="type-body-lg text-garage-gray">
-                  We listen first. Then we build a plan around you. No extremes&mdash;just thoughtful coaching,
-                  consistent progress, and a focus on results that actually last.
+                  We listen first, then build a plan around you. No extremes&mdash;just thoughtful coaching and
+                  lasting results.
                 </p>
                 <p className="type-body-lg text-garage-gray">
                   This is training designed for real life&mdash;and built to stay with you for it.
