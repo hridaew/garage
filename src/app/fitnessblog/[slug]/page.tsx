@@ -20,7 +20,10 @@ export async function generateStaticParams() {
     const posts = response.posts || [];
     return posts.filter((p) => p.slug).map((p) => ({ slug: p.slug! }));
   } catch (err) {
-    console.error("[blog/[slug]] generateStaticParams failed; posts will render on-demand via ISR:", err);
+    console.error("[blog/[slug]] generateStaticParams failed:", err);
+    if (process.env.NODE_ENV === "production") {
+      throw err;
+    }
     return [];
   }
 }

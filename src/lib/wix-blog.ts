@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { getWixClient } from "./wix-client";
 
 export interface WixSeoTag {
@@ -79,8 +80,9 @@ export interface SafePostsResponse {
 }
 
 const hasWixClientId = Boolean(process.env.NEXT_PUBLIC_WIX_CLIENT_ID);
+const blogRevalidateSeconds = 3600;
 
-export async function getAllPosts(limit = 12): Promise<SafePostsResponse> {
+async function fetchAllPosts(limit: number): Promise<SafePostsResponse> {
   if (!hasWixClientId) {
     return { posts: [] };
   }
@@ -92,7 +94,16 @@ export async function getAllPosts(limit = 12): Promise<SafePostsResponse> {
   return response as SafePostsResponse;
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+const getCachedAllPosts = unstable_cache(fetchAllPosts, ["wix-blog-posts"], {
+  revalidate: blogRevalidateSeconds,
+  tags: ["wix-blog-posts"],
+});
+
+export async function getAllPosts(limit = 12): Promise<SafePostsResponse> {
+  return getCachedAllPosts(limit);
+}
+
+async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
   if (!hasWixClientId) {
     return null;
   }
@@ -102,6 +113,15 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     fieldsets: ["RICH_CONTENT", "SEO"],
   });
   return (response.post as BlogPost | undefined) || null;
+}
+
+const getCachedPostBySlug = unstable_cache(fetchPostBySlug, ["wix-blog-post"], {
+  revalidate: blogRevalidateSeconds,
+  tags: ["wix-blog-post"],
+});
+
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  return getCachedPostBySlug(slug);
 }
 
 export async function getCategories() {

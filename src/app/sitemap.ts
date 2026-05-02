@@ -4,7 +4,7 @@ import { getAllPosts } from "@/lib/wix-blog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
-    { url: getCanonicalUrl(), lastModified: "2026-04-25", changeFrequency: "monthly", priority: 1 },
+    { url: getCanonicalUrl(), lastModified: "2026-05-01", changeFrequency: "monthly", priority: 1 },
     { url: getCanonicalUrl("/personal-training"), lastModified: "2026-04-25", changeFrequency: "monthly", priority: 0.9 },
     { url: getCanonicalUrl("/about-us"), lastModified: "2026-04-25", changeFrequency: "monthly", priority: 0.8 },
     { url: getCanonicalUrl("/contact-us-about-fitness"), lastModified: "2026-04-25", changeFrequency: "monthly", priority: 0.8 },

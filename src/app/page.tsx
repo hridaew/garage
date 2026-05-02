@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Metadata } from "next";
 import SiteShell from "@/components/layout/SiteShell";
 import HomeHero from "@/components/home/HomeHero";
 import Reveal from "@/components/motion/Reveal";
@@ -8,6 +9,30 @@ import ConsultTrigger from "@/components/ui/ConsultTrigger";
 import ContentContainer from "@/components/layout/ContentContainer";
 import InstagramFeed from "@/components/home/InstagramFeed";
 import PremiumButton from "@/components/ui/PremiumButton";
+
+const homeTitle = "1:1 Personal Training in Denver | Garage1880";
+const homeDescription =
+  "Private 1:1 personal training in Denver built around sustainable strength, better movement, and real-life progress at Garage 1880.";
+
+export const metadata: Metadata = {
+  title: { absolute: homeTitle },
+  description: homeDescription,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "Garage 1880",
+    title: homeTitle,
+    description: homeDescription,
+    url: "/",
+    images: ["/og-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: homeTitle,
+    description: homeDescription,
+    images: ["/og-image.jpg"],
+  },
+};
 
 const gallery = [
   {
